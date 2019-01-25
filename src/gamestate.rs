@@ -10,7 +10,7 @@ use amethyst::{
 
 pub struct GameState;
 
-const ARENA_WIDTH: f32 = 200.0;
+const ARENA_WIDTH: f32 = 50.0;
 const ARENA_HEIGHT: f32 = ARENA_WIDTH * 1080. / 1920.;
 
 fn initialise_camera(world: &mut World) {
