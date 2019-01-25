@@ -1,16 +1,15 @@
+mod gamestate;
 mod hunter;
-
 use amethyst::{
     core::transform::TransformBundle,
     prelude::*,
     renderer::{DisplayConfig, DrawFlat2D, Pipeline, RenderBundle, Stage},
     utils::application_root_dir,
 };
+use gamestate::GameState;
 
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
-
-    use crate::hunter::Hunter;
 
     let app_root = application_root_dir();
 
@@ -28,7 +27,7 @@ fn main() -> amethyst::Result<()> {
 
     let assets_dir = format!("{}/assets/", app_root);
 
-    let mut game = Application::new(assets_dir, Hunter, game_data)?;
+    let mut game = Application::new(assets_dir, GameState, game_data)?;
     game.run();
     Ok(())
 }
