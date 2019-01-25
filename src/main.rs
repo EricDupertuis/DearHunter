@@ -1,5 +1,7 @@
 mod gamestate;
 mod hunter;
+mod tree;
+
 use amethyst::{
     core::transform::TransformBundle,
     prelude::*,

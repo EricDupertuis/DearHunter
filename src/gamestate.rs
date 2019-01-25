@@ -1,4 +1,6 @@
-use crate::hunter::{initialise_hunter, load_sprite_sheet, Hunter};
+use crate::hunter;
+use crate::tree;
+
 
 use amethyst::{
     core::transform::Transform,
@@ -34,11 +36,14 @@ impl SimpleState for GameState {
         // Load the spritesheet necessary to render the graphics.
         // `spritesheet` is the layout of the sprites on the image;
         // `texture` is the pixel data.
-        let sprite_sheet_handle = load_sprite_sheet(world);
+        let hunter_sprite = hunter::load_sprite_sheet(world);
+        let tree_sprite = tree::load_sprite_sheet(world);
 
-        world.register::<Hunter>();
+        world.register::<hunter::Hunter>();
+        world.register::<tree::Tree>();
 
-        initialise_hunter(world, sprite_sheet_handle);
+        hunter::initialise_hunter(world, hunter_sprite);
+        tree::initialise_tree(world, tree_sprite);
         initialise_camera(world);
     }
 }
