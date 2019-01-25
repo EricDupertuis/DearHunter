@@ -15,7 +15,7 @@ impl<'s> System<'s> for HunterSystem {
     );
 
     fn run(&mut self, (mut transforms, hunters, input): Self::SystemData) {
-        for (hunter, transform) in (&hunters, &mut transforms).join() {
+        for (_hunter, transform) in (&hunters, &mut transforms).join() {
             let mov_x = input.axis_value("leftright");
             let mov_y = input.axis_value("updown");
 
