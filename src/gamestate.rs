@@ -1,5 +1,7 @@
+extern crate rand;
 use crate::hunter;
 use crate::tree;
+use rand::Rng;
 
 use amethyst::{
     core::transform::Transform,
@@ -42,7 +44,15 @@ impl SimpleState for GameState {
         world.register::<tree::Tree>();
 
         hunter::initialise_hunter(world, hunter_sprite);
-        tree::initialise_tree(world, tree_sprite);
+
+        let mut rng = rand::thread_rng();
+
+        for _ in 1..100 {
+            let x = (rng.gen::<f32>()) * 100.;
+            let y = (rng.gen::<f32>()) * 100.;
+            tree::initialise_tree(world, tree_sprite.clone(), x, y);
+        }
+
         initialise_camera(world);
     }
 }
