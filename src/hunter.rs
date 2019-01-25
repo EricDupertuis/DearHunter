@@ -10,8 +10,8 @@ use amethyst::{
     utils::application_root_dir,
 };
 
-const HUNTER_HEIGHT: f32 = 16.0;
-const HUNTER_WIDTH: f32 = 4.0;
+pub const HUNTER_HEIGHT: f32 = 16.0;
+pub const HUNTER_WIDTH: f32 = 4.0;
 
 pub struct Hunter {
     pub width: f32,

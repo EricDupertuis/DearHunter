@@ -1,7 +1,6 @@
 use crate::hunter;
 use crate::tree;
 
-
 use amethyst::{
     core::transform::Transform,
     prelude::*,
@@ -10,8 +9,8 @@ use amethyst::{
 
 pub struct GameState;
 
-const ARENA_WIDTH: f32 = 50.0;
-const ARENA_HEIGHT: f32 = ARENA_WIDTH * 1080. / 1920.;
+pub const ARENA_WIDTH: f32 = 50.0;
+pub const ARENA_HEIGHT: f32 = ARENA_WIDTH * 1080. / 1920.;
 
 fn initialise_camera(world: &mut World) {
     let mut transform = Transform::default();
