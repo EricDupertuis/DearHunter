@@ -15,6 +15,7 @@ AMETHYST_LOG_LEVEL_FILTER=WARN cargo run
 * Is expressed in arena units
 * Origin is as follow
 
+```
 y
 ^
 |
@@ -22,3 +23,4 @@ y
 |----*
 |    |
 0-------> x
+```
