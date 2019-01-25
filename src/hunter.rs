@@ -10,20 +10,11 @@ use amethyst::{
     utils::application_root_dir,
 };
 
-pub const HUNTER_HEIGHT: f32 = 16.0;
-pub const HUNTER_WIDTH: f32 = 4.0;
-
-pub struct Hunter {
-    pub width: f32,
-    pub height: f32,
-}
+pub struct Hunter {}
 
 impl Hunter {
     fn new() -> Hunter {
-        Hunter {
-            width: HUNTER_WIDTH,
-            height: HUNTER_HEIGHT,
-        }
+        Hunter {}
     }
 }
 
@@ -59,20 +50,24 @@ pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     )
 }
 
-pub fn initialise_hunter(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) {
+pub fn initialise_hunter(
+    world: &mut World,
+    sprite_sheet_handle: SpriteSheetHandle,
+    x: f32,
+    y: f32,
+) {
     let mut transform = Transform::default();
 
-    // Correctly position the hunters.
-    let y = 20.0;
-    transform.set_xyz(HUNTER_WIDTH * 0.5, y, 0.0);
+    transform.set_xyz(x, y, 0.0);
 
-    // Assign the sprites for the hunters
+    let scale = 2. / 16.;
+    transform.set_scale(scale, scale, scale);
+
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_sheet_handle.clone(),
-        sprite_number: 0, // hunter is the first sprite in the sprite_sheet
+        sprite_number: 0,
     };
 
-    // Create a hunter entity.
     world
         .create_entity()
         .with(sprite_render.clone())

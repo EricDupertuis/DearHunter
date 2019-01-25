@@ -46,7 +46,7 @@ impl SimpleState for GameState {
         world.register::<hunter::Hunter>();
         world.register::<tree::Tree>();
 
-        hunter::initialise_hunter(world, hunter_sprite);
+        hunter::initialise_hunter(world, hunter_sprite, ARENA_WIDTH * 0.5, ARENA_HEIGHT * 0.5);
 
         let mut rng = rand::thread_rng();
 
