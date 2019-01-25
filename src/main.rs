@@ -6,7 +6,7 @@ mod systems;
 use amethyst::{
     core::transform::TransformBundle,
     prelude::*,
-    renderer::{ColorMask, DisplayConfig, DrawFlat2D, Pipeline, RenderBundle, Stage, ALPHA},
+    renderer::{ColorMask, DisplayConfig, DrawFlat2D, Pipeline, RenderBundle, Stage, ALPHA, DepthMode},
     utils::application_root_dir,
     input::InputBundle
 };
@@ -30,13 +30,15 @@ fn main() -> amethyst::Result<()> {
 
     let pipe = Pipeline::build().with_stage(
         Stage::with_backbuffer()
-            .clear_target([0.0, 0.0, 0.0, 1.0], 1.0)
-            .with_pass(DrawFlat2D::new().with_transparency(ColorMask::all(), ALPHA, None)),
+            .clear_target([0.0, 0.0, 0.0, 1.0], 20.0)
+            .with_pass(DrawFlat2D::new().with_transparency(ColorMask::all(), ALPHA, Some(DepthMode::LessEqualWrite)))
     );
 
     let game_data = GameDataBuilder::default()
-        .with_bundle(RenderBundle::new(pipe, Some(config)).with_sprite_sheet_processor())?
         .with_bundle(TransformBundle::new())?
+        .with_bundle(RenderBundle::new(pipe, Some(config))
+                .with_sprite_sheet_processor()
+                .with_sprite_visibility_sorting(&["transform_system"]))?
         .with_bundle(input_bundle)?
         .with(systems::HunterSystem, "paddle_system", &["input_system"]);
 

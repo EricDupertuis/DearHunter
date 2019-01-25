@@ -5,6 +5,7 @@ use rand::Rng;
 
 use amethyst::{
     core::transform::Transform,
+    core::nalgebra::Orthographic3,
     prelude::*,
     renderer::{Camera, Projection},
 };
@@ -20,12 +21,14 @@ fn initialise_camera(world: &mut World) {
 
     world
         .create_entity()
-        .with(Camera::from(Projection::orthographic(
+        .with(Camera::from(Projection::Orthographic(Orthographic3::new(
             0.0,
             ARENA_WIDTH,
             0.0,
             ARENA_HEIGHT,
-        )))
+            0.0, // near plane
+            20., // far plane
+        ))))
         .with(transform)
         .build();
 }
@@ -48,8 +51,8 @@ impl SimpleState for GameState {
         let mut rng = rand::thread_rng();
 
         for _ in 1..100 {
-            let x = (rng.gen::<f32>()) * 100.;
-            let y = (rng.gen::<f32>()) * 100.;
+            let x = (rng.gen::<f32>()) * 30.;
+            let y = (rng.gen::<f32>()) * 30.;
             tree::initialise_tree(world, tree_sprite.clone(), x, y);
         }
 
