@@ -4,8 +4,8 @@ use crate::tree;
 use rand::Rng;
 
 use amethyst::{
-    core::transform::Transform,
     core::nalgebra::Orthographic3,
+    core::transform::Transform,
     prelude::*,
     renderer::{Camera, Projection},
 };

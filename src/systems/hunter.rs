@@ -31,7 +31,9 @@ impl<'s> System<'s> for HunterSystem {
                 if mv_amount_y != 0.0 {
                     let scaled_amount = 1.2 * mv_amount_y as f32;
                     let hunter_y = transform.translation().y;
-                    transform.set_y((hunter_y + scaled_amount).min(ARENA_HEIGHT - 1.0).max(1.0));
+                    let y = (hunter_y + scaled_amount).min(ARENA_HEIGHT - 1.0).max(1.0);
+                    transform.set_y(y);
+                    transform.set_z(-y);
                 }
             }
         }

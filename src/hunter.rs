@@ -5,7 +5,7 @@ use amethyst::{
     prelude::*,
     renderer::{
         PngFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, SpriteSheetHandle, Texture,
-        TextureMetadata,
+        TextureMetadata, Transparent,
     },
     utils::application_root_dir,
 };
@@ -58,7 +58,7 @@ pub fn initialise_hunter(
 ) {
     let mut transform = Transform::default();
 
-    transform.set_xyz(x, y, 0.0);
+    transform.set_xyz(x, y, -y);
 
     let scale = 2. / 16.;
     transform.set_scale(scale, scale, scale);
@@ -73,5 +73,6 @@ pub fn initialise_hunter(
         .with(sprite_render.clone())
         .with(Hunter::new())
         .with(transform)
+        .with(Transparent)
         .build();
 }
