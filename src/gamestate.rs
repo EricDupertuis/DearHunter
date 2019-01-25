@@ -26,8 +26,8 @@ fn initialise_camera(world: &mut World) {
             ARENA_WIDTH,
             0.0,
             ARENA_HEIGHT,
-            0.0, // near plane
-            20., // far plane
+            0.0,          // near plane
+            ARENA_HEIGHT, // far plane
         ))))
         .with(transform)
         .build();
@@ -51,8 +51,8 @@ impl SimpleState for GameState {
         let mut rng = rand::thread_rng();
 
         for _ in 1..100 {
-            let x = (rng.gen::<f32>()) * 30.;
-            let y = (rng.gen::<f32>()) * 30.;
+            let x = (rng.gen::<f32>()) * ARENA_WIDTH;
+            let y = (rng.gen::<f32>()) * ARENA_HEIGHT;
             tree::initialise_tree(world, tree_sprite.clone(), x, y);
         }
 
