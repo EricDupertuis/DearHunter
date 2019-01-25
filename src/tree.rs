@@ -64,7 +64,7 @@ pub fn initialise_tree(world: &mut World, sprite_sheet_handle: SpriteSheetHandle
 
     transform.set_xyz(20., 20., 0.);
 
-    let scale = 8. / 256.;
+    let scale = 8. / 138.;
     transform.set_scale(scale, scale, scale);
 
     let sprite_render = SpriteRender {
