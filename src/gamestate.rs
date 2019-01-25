@@ -43,7 +43,14 @@ impl SimpleState for GameState {
         world.register::<tree::Tree>();
 
         hunter::initialise_hunter(world, hunter_sprite);
-        tree::initialise_tree(world, tree_sprite);
+
+        let mut x = 10.;
+        for _ in 1..10 {
+            tree::initialise_tree(world, tree_sprite.clone(), x, 10.);
+            tree::initialise_tree(world, tree_sprite.clone(), 2. * x, 10.);
+            x += 2.;
+        }
+
         initialise_camera(world);
     }
 }

@@ -59,16 +59,16 @@ pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     )
 }
 
-pub fn initialise_tree(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) {
+pub fn initialise_tree(world: &mut World, sprite_sheet_handle: SpriteSheetHandle, x: f32, y: f32) {
     let mut transform = Transform::default();
 
-    transform.set_xyz(20., 20., 0.);
+    transform.set_xyz(x, y, 0.);
 
     let scale = 8. / 138.;
     transform.set_scale(scale, scale, scale);
 
     let sprite_render = SpriteRender {
-        sprite_sheet: sprite_sheet_handle.clone(),
+        sprite_sheet: sprite_sheet_handle,
         sprite_number: 0,
     };
 
