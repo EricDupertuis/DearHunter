@@ -8,7 +8,7 @@ use crate::tree;
 use crate::voronoi;
 
 use amethyst::{
-    core::nalgebra::Orthographic3,
+    core::nalgebra::{Orthographic3, Point2},
     core::transform::Transform,
     core::Parent,
     ecs::Entity,
@@ -87,8 +87,21 @@ impl SimpleState for GameState {
             )
         };
 
-        let points =
-            voronoi::generate_voronoi(tree_count, centroid_count, path_width, start_radius);
+        let points = voronoi::generate_voronoi(
+            tree_count,
+            centroid_count,
+            path_width,
+            vec![
+                voronoi::ClearRegion {
+                    center: Point2::new(0.5, 0.5),
+                    radius: start_radius,
+                },
+                voronoi::ClearRegion {
+                    center: Point2::new(1.0, 1.0),
+                    radius: start_radius,
+                },
+            ],
+        );
 
         for p in points.iter() {
             let x = p.x * ARENA_WIDTH;
