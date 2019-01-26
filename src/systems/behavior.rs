@@ -11,9 +11,6 @@ use crate::tree::Tree;
 
 pub struct BehaviorSystem;
 
-const PREY_SPEED: f32 = 2.;
-const DETECTION_RADIUS: f32 = 14.;
-
 impl<'s> System<'s> for BehaviorSystem {
     type SystemData = (
         WriteStorage<'s, VelocityCmd>,
@@ -32,7 +29,7 @@ impl<'s> System<'s> for BehaviorSystem {
             y = trans.translation().y;
         }
 
-        for (cmd, trans, _beast) in (&mut commands, &transforms, &beasts).join() {
+        for (cmd, trans, beast) in (&mut commands, &transforms, &beasts).join() {
             let bx = trans.translation().x;
             let by = trans.translation().y;
 
@@ -46,7 +43,7 @@ impl<'s> System<'s> for BehaviorSystem {
                 let mut d = Vector2::new(dx, dy);
 
                 let dst = norm(&d);
-                if (dst > 5.) {
+                if (dst > beast.tree_detection_radius || dst < 0.1) {
                     continue;
                 }
 
@@ -54,12 +51,14 @@ impl<'s> System<'s> for BehaviorSystem {
                 speed += d;
             }
 
-            if ((bx - x) * (bx - x) + (by - y) * (by - y)).sqrt() <= DETECTION_RADIUS {
-                speed.x += if x > bx { -PREY_SPEED } else { PREY_SPEED };
-                speed.y += if y > by { -PREY_SPEED } else { PREY_SPEED };
+            let prey_speed = beast.max_speed;
+
+            if ((bx - x) * (bx - x) + (by - y) * (by - y)).sqrt() <= beast.player_detection_radius {
+                speed.x += if x > bx { -prey_speed } else { prey_speed };
+                speed.y += if y > by { -prey_speed } else { prey_speed };
             }
 
-            speed = normalize(&speed) * PREY_SPEED;
+            speed = normalize(&speed) * prey_speed;
 
             cmd.x = speed.x;
             cmd.y = speed.y;
