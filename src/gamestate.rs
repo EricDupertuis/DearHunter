@@ -1,9 +1,8 @@
 extern crate rand;
+use crate::beast;
 use crate::hunter;
 use crate::tree;
-use crate::beast;
 use crate::voronoi;
-use rand::Rng;
 
 use amethyst::{
     core::nalgebra::Orthographic3,
@@ -56,12 +55,8 @@ impl SimpleState for GameState {
             world,
             beast_sprite,
             &[ARENA_WIDTH * 0.2, ARENA_WIDTH * 0.4, ARENA_WIDTH * 0.8],
-            &[ARENA_HEIGHT * 0.2, ARENA_HEIGHT * 0.4, ARENA_HEIGHT * 0.8]
-            );
-
-
-
-        let mut rng = rand::thread_rng();
+            &[ARENA_HEIGHT * 0.2, ARENA_HEIGHT * 0.4, ARENA_HEIGHT * 0.8],
+        );
 
         // TODO: Fetch this from RON
         let tree_cnt = 200;

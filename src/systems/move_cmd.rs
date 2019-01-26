@@ -1,8 +1,8 @@
 use amethyst::ecs::{Join, Read, ReadStorage, System, WriteStorage};
 use amethyst::input::InputHandler;
 
-use crate::hunter::{Hunter};
-use crate::velcomp::{Velocity, VelocityCmd};
+use crate::hunter::Hunter;
+use crate::velcomp::VelocityCmd;
 pub struct MoveCmdSystem;
 
 const SPEED: f32 = 10.;
