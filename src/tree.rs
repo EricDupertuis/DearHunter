@@ -10,6 +10,10 @@ use amethyst::{
 };
 
 use crate::components;
+use crate::config::ForestConfig;
+
+const TREE_HEIGHT: f32 = 64.;
+const TREE_WIDTH: f32 = 64.;
 
 pub struct Tree {}
 impl Component for Tree {

@@ -1,5 +1,6 @@
 extern crate rand;
 use crate::beast;
+use crate::config::ForestConfig;
 use crate::hunter;
 use crate::tree;
 use crate::voronoi;
@@ -54,11 +55,16 @@ impl SimpleState for GameState {
             &[ARENA_HEIGHT * 0.2, ARENA_HEIGHT * 0.4, ARENA_HEIGHT * 0.8],
         );
 
-        // TODO: Fetch this from RON
-        let tree_cnt = 200;
-        let centroid_cnt = 30;
-        let path_width = 0.03;
-        let points = voronoi::generate_voronoi(tree_cnt, centroid_cnt, path_width);
+        let (tree_count, centroid_count, path_width) = {
+            let forest_config = &world.read_resource::<ForestConfig>();
+            (
+                forest_config.tree_count,
+                forest_config.centroid_count,
+                forest_config.path_width,
+            )
+        };
+
+        let points = voronoi::generate_voronoi(tree_count, centroid_count, path_width);
 
         for p in points.iter() {
             let x = p.x * ARENA_WIDTH;
