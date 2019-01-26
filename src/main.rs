@@ -1,12 +1,13 @@
 mod beast;
+mod bullet;
 mod components;
 mod config;
 mod gamestate;
+mod home;
 mod hunter;
 mod systems;
 mod tree;
 mod voronoi;
-mod bullet;
 
 use config::GameConfig;
 
@@ -72,15 +73,11 @@ fn main() -> amethyst::Result<()> {
             "movement_system",
             &["collision_system"],
         )
-        .with(
-            systems::BehaviorSystem,
-            "behavior_system",
-            &[],
-        )
+        .with(systems::BehaviorSystem, "behavior_system", &[])
         .with(
             systems::ShootCmdSystem,
             "shoot_cmd_system",
-            &["input_system"]
+            &["input_system"],
         );
 
     // Base path where we look for assets/textures/sprites

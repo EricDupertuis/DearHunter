@@ -1,9 +1,10 @@
 extern crate rand;
 use crate::beast;
+use crate::bullet;
 use crate::config::GameConfig;
+use crate::home;
 use crate::hunter;
 use crate::tree;
-use crate::bullet;
 use crate::voronoi;
 
 use amethyst::{
@@ -58,6 +59,9 @@ impl SimpleState for GameState {
         let tree_sprite = tree::load_sprite_sheet(world);
         let beast_sprite = beast::load_sprite_sheet(world);
         let bullet_sprite = bullet::load_sprite_sheet(world);
+        let home_sprite = home::load_sprite_sheet(world);
+
+        let home = home::initialise_home(world, home_sprite, ARENA_WIDTH, ARENA_HEIGHT);
 
         let hunter =
             hunter::initialise_hunter(world, hunter_sprite, ARENA_WIDTH * 0.5, ARENA_HEIGHT * 0.5);
@@ -69,11 +73,8 @@ impl SimpleState for GameState {
             &[ARENA_HEIGHT * 0.2, ARENA_HEIGHT * 0.4, ARENA_HEIGHT * 0.8],
         );
 
-        let bullet =  bullet::initialise_bullet(
-            world,
-            bullet_sprite,
-            ARENA_WIDTH * 0.7, ARENA_HEIGHT * 0.7
-        );
+        let bullet =
+            bullet::initialise_bullet(world, bullet_sprite, ARENA_WIDTH * 0.7, ARENA_HEIGHT * 0.7);
 
         let (tree_count, centroid_count, path_width, start_radius) = {
             let forest_config = &world.read_resource::<GameConfig>().forest;
