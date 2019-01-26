@@ -70,10 +70,10 @@ impl<'s> System<'s> for CollisionSystem {
                     let dx = tree.center.x - p.x;
                     let dy = tree.center.y - p.y;
                     if vel.x / dx > 0. {
-                        vel.x = 0.0
+                        vel.x *= -0.1;
                     }
                     if vel.y / dy > 0. {
-                        vel.y = 0.0
+                        vel.y *= -0.1;
                     }
                 }
             }
