@@ -4,6 +4,7 @@ use crate::tree;
 use rand::Rng;
 
 use amethyst::{
+    core::nalgebra::Orthographic3,
     core::transform::Transform,
     prelude::*,
     renderer::{Camera, Projection},
@@ -11,8 +12,8 @@ use amethyst::{
 
 pub struct GameState;
 
-const ARENA_WIDTH: f32 = 50.0;
-const ARENA_HEIGHT: f32 = ARENA_WIDTH * 1080. / 1920.;
+pub const ARENA_WIDTH: f32 = 50.0;
+pub const ARENA_HEIGHT: f32 = ARENA_WIDTH * 1080. / 1920.;
 
 fn initialise_camera(world: &mut World) {
     let mut transform = Transform::default();
@@ -20,12 +21,14 @@ fn initialise_camera(world: &mut World) {
 
     world
         .create_entity()
-        .with(Camera::from(Projection::orthographic(
+        .with(Camera::from(Projection::Orthographic(Orthographic3::new(
             0.0,
             ARENA_WIDTH,
             0.0,
             ARENA_HEIGHT,
-        )))
+            0.0,          // near plane
+            ARENA_HEIGHT, // far plane
+        ))))
         .with(transform)
         .build();
 }
@@ -43,13 +46,13 @@ impl SimpleState for GameState {
         world.register::<hunter::Hunter>();
         world.register::<tree::Tree>();
 
-        hunter::initialise_hunter(world, hunter_sprite);
+        hunter::initialise_hunter(world, hunter_sprite, ARENA_WIDTH * 0.5, ARENA_HEIGHT * 0.5);
 
         let mut rng = rand::thread_rng();
 
         for _ in 1..100 {
-            let x = (rng.gen::<f32>()) * 100.;
-            let y = (rng.gen::<f32>()) * 100.;
+            let x = (rng.gen::<f32>()) * ARENA_WIDTH;
+            let y = (rng.gen::<f32>()) * ARENA_HEIGHT;
             tree::initialise_tree(world, tree_sprite.clone(), x, y);
         }
 
