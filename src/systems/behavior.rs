@@ -1,5 +1,5 @@
 use amethyst::{
-    core::nalgebra::{distance, norm, normalize, Vector2},
+    core::nalgebra::Vector2,
     core::transform::Transform,
     ecs::prelude::{Join, ReadStorage, System, WriteStorage},
 };
@@ -42,12 +42,12 @@ impl<'s> System<'s> for BehaviorSystem {
 
                 let mut d = Vector2::new(dx, dy);
 
-                let dst = norm(&d);
-                if (dst > beast.tree_detection_radius || dst < 0.1) {
+                let dst = d.norm();
+                if dst > beast.tree_detection_radius || dst < 0.1 {
                     continue;
                 }
 
-                d = normalize(&d) * 1. / (dst * dst);
+                d = d.normalize() * 1. / (dst * dst);
                 speed += d;
             }
 
@@ -58,7 +58,7 @@ impl<'s> System<'s> for BehaviorSystem {
                 speed.y += if y > by { -prey_speed } else { prey_speed };
             }
 
-            speed = normalize(&speed) * prey_speed;
+            speed = speed.normalize() * prey_speed;
 
             cmd.x = speed.x;
             cmd.y = speed.y;
