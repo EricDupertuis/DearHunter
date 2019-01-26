@@ -1,23 +1,21 @@
-use amethyst::core::Transform;
 use amethyst::ecs::{Join, Read, ReadStorage, System, WriteStorage};
 use amethyst::input::InputHandler;
 
-use crate::gamestate::{ARENA_HEIGHT, ARENA_WIDTH};
 use crate::hunter::{Hunter};
 use crate::velcomp::{Velocity, VelocityCmd};
 pub struct MoveCmdSystem;
 
-const SPEED: f32 = 1.;
+const SPEED: f32 = 10.;
 
 impl<'s> System<'s> for MoveCmdSystem {
     type SystemData = (
-        WriteStorage<'s, Velocity>,
+        WriteStorage<'s, VelocityCmd>,
         Read<'s, InputHandler<String, String>>,
         ReadStorage<'s, Hunter>,
     );
 
     fn run(&mut self, (mut velocity_cmds, input, hunters): Self::SystemData) {
-        for(_hunter, velocity_cmd) in (&hunters, &mut velocity_cmds).join(){
+        for (_hunter, velocity_cmd) in (&hunters, &mut velocity_cmds).join() {
             if let Some(mov_x) = input.axis_value("leftright") {
                 velocity_cmd.x = mov_x as f32 * SPEED;
             }

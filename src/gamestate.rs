@@ -28,7 +28,7 @@ fn initialise_camera(world: &mut World) {
             0.0,
             ARENA_HEIGHT,
             0.0,          // near plane
-            ARENA_HEIGHT, // far plane
+            ARENA_HEIGHT, // far plane. z_depth = height since we're using an inclined plane to show depth in 2D.
         ))))
         .with(transform)
         .build();
