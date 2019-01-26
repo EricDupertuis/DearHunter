@@ -10,7 +10,6 @@ use amethyst::{
 };
 
 use crate::components;
-use crate::config::ForestConfig;
 
 pub struct Tree {}
 impl Component for Tree {
