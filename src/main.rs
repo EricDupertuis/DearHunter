@@ -56,22 +56,31 @@ fn main() -> amethyst::Result<()> {
 
     let game_data = GameDataBuilder::default()
         .with_bundle(TransformBundle::new())?
+        .with_bundle(input_bundle)?
         .with(
             systems::SpriteCullingSystem,
             "sprite_culling",
             &["transform_system"],
         )
-        .with_bundle(
-            RenderBundle::new(pipe, Some(config))
-                .with_sprite_sheet_processor()
-                .with_sprite_visibility_sorting(&["transform_system", "sprite_culling"]),
-        )?
-        .with_bundle(input_bundle)?
         .with(
             systems::MoveCmdSystem,
             "input_cmd_system",
             &["input_system"],
         )
+        .with(
+            systems::HunterSpriteSwitcher,
+            "hunter_sprite_system",
+            &["input_cmd_system"],
+        )
+        .with_bundle(
+            RenderBundle::new(pipe, Some(config))
+                .with_sprite_sheet_processor()
+                .with_sprite_visibility_sorting(&[
+                    "hunter_sprite_system",
+                    "transform_system",
+                    "sprite_culling",
+                ]),
+        )?
         .with(
             systems::CollisionSystem,
             "collision_system",
