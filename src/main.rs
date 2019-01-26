@@ -70,6 +70,11 @@ fn main() -> amethyst::Result<()> {
             systems::MoveSystem,
             "movement_system",
             &["collision_system"],
+        )
+        .with(
+            systems::BehaviorSystem,
+            "behavior_system",
+            &[],
         );
 
     // Base path where we look for assets/textures/sprites
