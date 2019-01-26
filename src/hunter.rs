@@ -4,6 +4,7 @@ use amethyst::{
     assets::{AssetStorage, Loader},
     core::transform::Transform,
     ecs::prelude::{Component, NullStorage},
+    ecs::Entity,
     prelude::*,
     renderer::{
         PngFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, SpriteSheetHandle, Texture,
@@ -50,7 +51,7 @@ pub fn initialise_hunter(
     sprite_sheet_handle: SpriteSheetHandle,
     x: f32,
     y: f32,
-) {
+) -> Entity {
     let mut transform = Transform::default();
     transform.set_xyz(x, y, -y);
 
@@ -84,5 +85,5 @@ pub fn initialise_hunter(
             z: 0.,
         })
         .with(components::VelocityCmd { x: 0., y: 0. })
-        .build();
+        .build()
 }
