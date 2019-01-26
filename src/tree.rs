@@ -9,8 +9,7 @@ use amethyst::{
     },
 };
 
-const TREE_HEIGHT: f32 = 64.;
-const TREE_WIDTH: f32 = 64.;
+const TREE_SIZE: f32 = 8.;
 
 pub struct Tree {
     pub width: f32,
@@ -20,8 +19,8 @@ pub struct Tree {
 impl Tree {
     fn new() -> Tree {
         Tree {
-            width: TREE_WIDTH,
-            height: TREE_HEIGHT,
+            width: TREE_SIZE,
+            height: TREE_SIZE,
         }
     }
 }
@@ -59,7 +58,7 @@ pub fn initialise_tree(world: &mut World, sprite_sheet_handle: SpriteSheetHandle
 
     transform.set_xyz(x, y, -y);
 
-    let scale = 8. / 138.;
+    let scale = TREE_SIZE / 138.;
     transform.set_scale(scale, scale, scale);
 
     let sprite_render = SpriteRender {
