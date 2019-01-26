@@ -56,7 +56,7 @@ pub fn initialise_hunter(
     transform.set_xyz(x, y, -y);
 
     const HUNTER_SIZE: f32 = 2.;
-    let scale = HUNTER_SIZE / 16.;
+    let scale = HUNTER_SIZE / 256.;
     transform.set_scale(scale, scale, scale);
 
     let sprite_render = SpriteRender {
@@ -86,6 +86,10 @@ pub fn initialise_hunter(
             z: 0.,
         })
         .with(components::VelocityCmd { x: 0., y: 0. })
-        .with(components::ShootCmd {x: 0., y: 0., speed: 0.})
+        .with(components::ShootCmd {
+            x: 0.,
+            y: 0.,
+            speed: 0.,
+        })
         .build()
 }

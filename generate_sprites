@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd $(dirname $0)
+
+./scripts/make_spritesheet.py resources/sprites/hunter_*.png \
+    --output resources/sprites/hunter.png \
+    --ron resources/sprites/hunter.ron \

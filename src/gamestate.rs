@@ -26,7 +26,9 @@ pub const CAMERA_HEIGHT: f32 = CAMERA_WIDTH * 1080. / 1920.;
 
 fn initialise_camera(world: &mut World, parent: Entity) {
     let mut transform = Transform::default();
-    let scale = 16. / 2.;
+
+    // Keep it synced with the hunter
+    let scale = 256. / 2.;
 
     // In case of disappearing sprites, check far plane and z camera transform
     transform.set_xyz(
