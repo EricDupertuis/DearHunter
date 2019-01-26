@@ -1,9 +1,8 @@
 use amethyst::core::Transform;
-use amethyst::ecs::{Join, Read, ReadStorage, System, WriteStorage};
-use amethyst::input::InputHandler;
+use amethyst::ecs::{Join, ReadStorage, System, WriteStorage};
 
 use crate::gamestate::{ARENA_HEIGHT, ARENA_WIDTH};
-use crate::hunter::{Hunter, Velocity};
+use crate::hunter::Velocity;
 
 pub struct MoveSystem;
 

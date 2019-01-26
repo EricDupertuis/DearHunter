@@ -1,7 +1,6 @@
 use amethyst::{
     core::transform::Transform,
-    ecs::prelude::{Join, Read, ReadStorage, System, WriteStorage},
-    input::InputHandler,
+    ecs::prelude::{Join, ReadStorage, System, WriteStorage},
 };
 
 use crate::gamestate::{ARENA_HEIGHT, ARENA_WIDTH};
@@ -17,7 +16,7 @@ impl<'s> System<'s> for CollisionSystem {
     );
 
     fn run(&mut self, (mut velocities, hunters, commands, transforms): Self::SystemData) {
-        for (hunter, transform, vel, cmd) in
+        for (_hunter, transform, vel, cmd) in
             (&hunters, &transforms, &mut velocities, &commands).join()
         {
             // Map commands to velocities
