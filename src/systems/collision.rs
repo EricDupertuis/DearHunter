@@ -16,7 +16,7 @@ impl<'s> System<'s> for CollisionSystem {
     );
 
     fn run(&mut self, (mut velocities, hunters, commands, transforms): Self::SystemData) {
-        for (_hunter, transform, vel, cmd) in
+        for (hunter, transform, vel, cmd) in
             (&hunters, &transforms, &mut velocities, &commands).join()
         {
             // Map commands to velocities
@@ -27,17 +27,17 @@ impl<'s> System<'s> for CollisionSystem {
             let x = transform.translation().x;
             let y = transform.translation().y;
 
-            let hunter_height = 2.0;
-            let hunter_width = 2.0;
+            let hunter_half_height = hunter.height / 2.;
+            let hunter_half_width = hunter.width / 2.;
 
-            if ((y + hunter_height / 2.) >= ARENA_HEIGHT && vel.y > 0.)
-                || ((y - hunter_height / 2.) <= 0. && vel.y < 0.)
+            if ((y + hunter_half_height) >= ARENA_HEIGHT && vel.y > 0.)
+                || ((y - hunter_half_height) <= 0. && vel.y < 0.)
             {
                 vel.y = 0.0;
             }
 
-            if ((x + hunter_width / 2.) >= ARENA_WIDTH && vel.x > 0.)
-                || ((x - hunter_width / 2.) <= 0. && vel.x < 0.)
+            if ((x + hunter_half_width) >= ARENA_WIDTH && vel.x > 0.)
+                || ((x - hunter_half_width) <= 0. && vel.x < 0.)
             {
                 vel.x = 0.0;
             }

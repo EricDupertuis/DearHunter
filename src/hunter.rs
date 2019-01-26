@@ -10,11 +10,16 @@ use amethyst::{
     utils::application_root_dir,
 };
 
-pub struct Hunter {}
-
+pub struct Hunter {
+    pub width: f32,
+    pub height: f32,
+}
 impl Hunter {
     fn new() -> Hunter {
-        Hunter {}
+        Hunter {
+            width: 2.0,
+            height: 2.0,
+        }
     }
 }
 
@@ -40,7 +45,6 @@ pub struct VelocityCmd {
 impl Component for VelocityCmd {
     type Storage = DenseVecStorage<Self>;
 }
-
 
 pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     // Load the sprite sheet necessary to render the graphics.
@@ -97,7 +101,11 @@ pub fn initialise_hunter(
         .with(Hunter::new())
         .with(transform)
         .with(Transparent)
-        .with(Velocity{x: 0., y: 0., z: 0.})
-        .with(VelocityCmd{x: 0., y: 0.})
+        .with(Velocity {
+            x: 0.,
+            y: 0.,
+            z: 0.,
+        })
+        .with(VelocityCmd { x: 0., y: 0. })
         .build();
 }
