@@ -1,4 +1,4 @@
-use crate::velcomp;
+use crate::components;
 
 use amethyst::{
     assets::{AssetStorage, Loader},
@@ -58,7 +58,7 @@ pub fn initialise_beast(
     xs: &[f32],
     ys: &[f32],
 ) {
-    for (x,y) in xs.iter().zip(ys.iter()) {
+    for (x, y) in xs.iter().zip(ys.iter()) {
         let mut transform = Transform::default();
 
         transform.set_xyz(*x, *y, -*y);
@@ -71,8 +71,8 @@ pub fn initialise_beast(
             sprite_number: 0,
         };
 
-        world.register::<velcomp::Velocity>();
-        world.register::<velcomp::VelocityCmd>();
+        world.register::<components::Velocity>();
+        world.register::<components::VelocityCmd>();
 
         world
             .create_entity()
@@ -80,8 +80,12 @@ pub fn initialise_beast(
             .with(Beast::new())
             .with(transform)
             .with(Transparent)
-            .with(velcomp::Velocity{x: 0., y: 0., z: 0.})
-            .with(velcomp::VelocityCmd{x: 0., y: 0.})
+            .with(components::Velocity {
+                x: 0.,
+                y: 0.,
+                z: 0.,
+            })
+            .with(components::VelocityCmd { x: 0., y: 0. })
             .build();
     }
 }

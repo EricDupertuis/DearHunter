@@ -3,9 +3,9 @@ use amethyst::{
     ecs::prelude::{Join, ReadStorage, System, WriteStorage},
 };
 
+use crate::components::{Velocity, VelocityCmd};
 use crate::gamestate::{ARENA_HEIGHT, ARENA_WIDTH};
-use crate::hunter::{Hunter};
-use crate::velcomp::{Velocity, VelocityCmd};
+use crate::hunter::Hunter;
 pub struct CollisionSystem;
 impl<'s> System<'s> for CollisionSystem {
     type SystemData = (

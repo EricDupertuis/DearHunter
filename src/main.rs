@@ -1,9 +1,9 @@
+mod beast;
+mod components;
 mod gamestate;
 mod hunter;
-mod beast;
-mod tree;
 mod systems;
-mod velcomp;
+mod tree;
 mod voronoi;
 
 use amethyst::{
