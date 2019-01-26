@@ -12,6 +12,9 @@ use crate::hunter::Hunter;
 
 pub struct BehaviorSystem;
 
+const PREY_SPEED: f32 = 2.;
+const DETECTION_RADIUS: f32 = 14.;
+
 impl<'s> System<'s> for BehaviorSystem {
     type SystemData = (
         WriteStorage<'s, VelocityCmd>,
@@ -33,17 +36,22 @@ impl<'s> System<'s> for BehaviorSystem {
         for (cmd, trans, _beast) in (&mut commands, &transforms, &beasts).join() {
             let bx = trans.translation().x;
             let by = trans.translation().y;
-
-            cmd.x = if x > bx {
-                -1.
+            
+            if ((bx - x) * (bx - x) + (by -y) * (by - y)).sqrt() <= DETECTION_RADIUS {
+                cmd.x = if x > bx {
+                    -PREY_SPEED
+                } else {
+                    PREY_SPEED
+                };
+                cmd.y = if y > by {
+                    -PREY_SPEED
+                } else {
+                    PREY_SPEED
+                };
             } else {
-                1.
-            };
-            cmd.y = if y > by {
-                -1.
-            } else {
-                1.
-            };
+                cmd.x = 0.;
+                cmd.y = 0.;
+            }
         }
     }
 }
