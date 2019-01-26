@@ -1,3 +1,5 @@
+use crate::components;
+
 use amethyst::{
     assets::{AssetStorage, Loader},
     core::transform::Transform,
@@ -7,14 +9,18 @@ use amethyst::{
         PngFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, SpriteSheetHandle, Texture,
         TextureMetadata, Transparent,
     },
-    utils::application_root_dir,
 };
 
-pub struct Hunter {}
-
+pub struct Hunter {
+    pub width: f32,
+    pub height: f32,
+}
 impl Hunter {
     fn new() -> Hunter {
-        Hunter {}
+        Hunter {
+            width: 2.0,
+            height: 2.0,
+        }
     }
 }
 
@@ -23,15 +29,11 @@ impl Component for Hunter {
 }
 
 pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
-    // Load the sprite sheet necessary to render the graphics.
-    // The texture is the pixel data
-    // `sprite_sheet` is the layout of the sprites on the image
-    // `texture_handle` is a cloneable reference to the texture
     let texture_handle = {
         let loader = world.read_resource::<Loader>();
         let texture_storage = world.read_resource::<AssetStorage<Texture>>();
         loader.load(
-            format!("{}/resources/sprites/hunter.png", application_root_dir()),
+            "sprites/hunter.png",
             PngFormat,
             TextureMetadata::srgb_scale(),
             (),
@@ -42,9 +44,9 @@ pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     let loader = world.read_resource::<Loader>();
     let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
     loader.load(
-        format!("{}/resources/sprites/hunter.ron", application_root_dir()), // Here we load the associated ron file
+        "sprites/hunter.ron",
         SpriteSheetFormat,
-        texture_handle, // We pass it the texture we want it to use
+        texture_handle,
         (),
         &sprite_sheet_store,
     )
@@ -68,11 +70,20 @@ pub fn initialise_hunter(
         sprite_number: 0,
     };
 
+    world.register::<components::Velocity>();
+    world.register::<components::VelocityCmd>();
+
     world
         .create_entity()
         .with(sprite_render.clone())
         .with(Hunter::new())
         .with(transform)
         .with(Transparent)
+        .with(components::Velocity {
+            x: 0.,
+            y: 0.,
+            z: 0.,
+        })
+        .with(components::VelocityCmd { x: 0., y: 0. })
         .build();
 }

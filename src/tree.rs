@@ -5,13 +5,11 @@ use amethyst::{
     prelude::*,
     renderer::{
         PngFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, SpriteSheetHandle, Texture,
-        TextureMetadata, Transparent
+        TextureMetadata, Transparent,
     },
-    utils::application_root_dir,
 };
 
-const TREE_HEIGHT: f32 = 64.;
-const TREE_WIDTH: f32 = 64.;
+const TREE_SIZE: f32 = 8.;
 
 pub struct Tree {
     pub width: f32,
@@ -21,8 +19,8 @@ pub struct Tree {
 impl Tree {
     fn new() -> Tree {
         Tree {
-            width: TREE_WIDTH,
-            height: TREE_HEIGHT,
+            width: TREE_SIZE,
+            height: TREE_SIZE,
         }
     }
 }
@@ -32,15 +30,11 @@ impl Component for Tree {
 }
 
 pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
-    // Load the sprite sheet necessary to render the graphics.
-    // The texture is the pixel data
-    // `sprite_sheet` is the layout of the sprites on the image
-    // `texture_handle` is a cloneable reference to the texture
     let texture_handle = {
         let loader = world.read_resource::<Loader>();
         let texture_storage = world.read_resource::<AssetStorage<Texture>>();
         loader.load(
-            format!("{}/resources/sprites/tree.png", application_root_dir()),
+            "sprites/tree.png",
             PngFormat,
             TextureMetadata::srgb_scale(),
             (),
@@ -51,9 +45,9 @@ pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     let loader = world.read_resource::<Loader>();
     let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
     loader.load(
-        format!("{}/resources/sprites/tree.ron", application_root_dir()), // Here we load the associated ron file
+        "sprites/tree.ron",
         SpriteSheetFormat,
-        texture_handle, // We pass it the texture we want it to use
+        texture_handle,
         (),
         &sprite_sheet_store,
     )
@@ -64,7 +58,7 @@ pub fn initialise_tree(world: &mut World, sprite_sheet_handle: SpriteSheetHandle
 
     transform.set_xyz(x, y, -y);
 
-    let scale = 8. / 138.;
+    let scale = TREE_SIZE / 138.;
     transform.set_scale(scale, scale, scale);
 
     let sprite_render = SpriteRender {

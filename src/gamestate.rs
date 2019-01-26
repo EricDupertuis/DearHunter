@@ -1,7 +1,8 @@
 extern crate rand;
+use crate::beast;
 use crate::hunter;
 use crate::tree;
-use rand::Rng;
+use crate::voronoi;
 
 use amethyst::{
     core::nalgebra::Orthographic3,
@@ -27,7 +28,7 @@ fn initialise_camera(world: &mut World) {
             0.0,
             ARENA_HEIGHT,
             0.0,          // near plane
-            ARENA_HEIGHT, // far plane
+            ARENA_HEIGHT, // far plane. z_depth = height since we're using an inclined plane to show depth in 2D.
         ))))
         .with(transform)
         .build();
@@ -42,17 +43,30 @@ impl SimpleState for GameState {
         // `texture` is the pixel data.
         let hunter_sprite = hunter::load_sprite_sheet(world);
         let tree_sprite = tree::load_sprite_sheet(world);
+        let beast_sprite = beast::load_sprite_sheet(world);
 
         world.register::<hunter::Hunter>();
         world.register::<tree::Tree>();
+        world.register::<beast::Beast>();
 
         hunter::initialise_hunter(world, hunter_sprite, ARENA_WIDTH * 0.5, ARENA_HEIGHT * 0.5);
 
-        let mut rng = rand::thread_rng();
+        beast::initialise_beast(
+            world,
+            beast_sprite,
+            &[ARENA_WIDTH * 0.2, ARENA_WIDTH * 0.4, ARENA_WIDTH * 0.8],
+            &[ARENA_HEIGHT * 0.2, ARENA_HEIGHT * 0.4, ARENA_HEIGHT * 0.8],
+        );
 
-        for _ in 1..100 {
-            let x = (rng.gen::<f32>()) * ARENA_WIDTH;
-            let y = (rng.gen::<f32>()) * ARENA_HEIGHT;
+        // TODO: Fetch this from RON
+        let tree_cnt = 200;
+        let centroid_cnt = 30;
+        let path_width = 0.03;
+        let points = voronoi::generate_voronoi(tree_cnt, centroid_cnt, path_width);
+
+        for p in points.iter() {
+            let x = p.x * ARENA_WIDTH;
+            let y = p.y * ARENA_HEIGHT;
             tree::initialise_tree(world, tree_sprite.clone(), x, y);
         }
 
