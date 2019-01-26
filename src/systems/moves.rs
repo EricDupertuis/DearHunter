@@ -3,8 +3,8 @@ use amethyst::ecs::{Join, Read, ReadStorage, System, WriteStorage};
 use amethyst::input::InputHandler;
 
 use crate::gamestate::{ARENA_HEIGHT, ARENA_WIDTH};
-use crate::hunter::{Hunter, Velocity};
-
+use crate::hunter::{Hunter};
+use crate::velcomp::{Velocity};
 pub struct MoveSystem;
 
 const STEP: f32 = 0.05;

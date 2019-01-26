@@ -12,15 +12,15 @@ use amethyst::{
     utils::application_root_dir,
 };
 
-pub struct Hunter {}
+pub struct Beast {}
 
-impl Hunter {
-    fn new() -> Hunter {
-        Hunter {}
+impl Beast {
+    fn new() -> Beast {
+        Beast {}
     }
 }
 
-impl Component for Hunter {
+impl Component for Beast {
     type Storage = DenseVecStorage<Self>;
 }
 
@@ -33,7 +33,7 @@ pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
         let loader = world.read_resource::<Loader>();
         let texture_storage = world.read_resource::<AssetStorage<Texture>>();
         loader.load(
-            format!("{}/resources/sprites/hunter.png", application_root_dir()),
+            format!("{}/resources/sprites/beast.png", application_root_dir()),
             PngFormat,
             TextureMetadata::srgb_scale(),
             (),
@@ -44,7 +44,7 @@ pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     let loader = world.read_resource::<Loader>();
     let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
     loader.load(
-        format!("{}/resources/sprites/hunter.ron", application_root_dir()), // Here we load the associated ron file
+        format!("{}/resources/sprites/beast.ron", application_root_dir()), // Here we load the associated ron file
         SpriteSheetFormat,
         texture_handle, // We pass it the texture we want it to use
         (),
@@ -52,34 +52,36 @@ pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     )
 }
 
-pub fn initialise_hunter(
+pub fn initialise_beast(
     world: &mut World,
     sprite_sheet_handle: SpriteSheetHandle,
-    x: f32,
-    y: f32,
+    xs: &[f32],
+    ys: &[f32],
 ) {
-    let mut transform = Transform::default();
+    for (x,y) in xs.iter().zip(ys.iter()) {
+        let mut transform = Transform::default();
 
-    transform.set_xyz(x, y, -y);
+        transform.set_xyz(*x, *y, -*y);
 
-    let scale = 2. / 16.;
-    transform.set_scale(scale, scale, scale);
+        let scale = 2. / 16.;
+        transform.set_scale(scale, scale, scale);
 
-    let sprite_render = SpriteRender {
-        sprite_sheet: sprite_sheet_handle.clone(),
-        sprite_number: 0,
-    };
+        let sprite_render = SpriteRender {
+            sprite_sheet: sprite_sheet_handle.clone(),
+            sprite_number: 0,
+        };
 
-    world.register::<velcomp::Velocity>();
-    world.register::<velcomp::VelocityCmd>();
+        world.register::<velcomp::Velocity>();
+        world.register::<velcomp::VelocityCmd>();
 
-    world
-        .create_entity()
-        .with(sprite_render.clone())
-        .with(Hunter::new())
-        .with(transform)
-        .with(Transparent)
-        .with(velcomp::Velocity{x: 0., y: 0., z: 0.})
-        .with(velcomp::VelocityCmd{x: 0., y: 0.})
-        .build();
+        world
+            .create_entity()
+            .with(sprite_render.clone())
+            .with(Beast::new())
+            .with(transform)
+            .with(Transparent)
+            .with(velcomp::Velocity{x: 0., y: 0., z: 0.})
+            .with(velcomp::VelocityCmd{x: 0., y: 0.})
+            .build();
+    }
 }

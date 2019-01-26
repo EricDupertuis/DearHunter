@@ -1,7 +1,9 @@
 mod gamestate;
 mod hunter;
+mod beast;
 mod tree;
 mod systems;
+mod velcomp;
 
 use amethyst::{
     core::transform::TransformBundle,
