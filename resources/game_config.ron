@@ -5,4 +5,10 @@
         path_width: 0.1,
         start_zone_radius: 0.15, // normalized, i.e. 1 means whole game area
     ),
+
+    behavior: (
+        prey_speed: 4.,
+        tree_detection_radius: 5.,
+        player_detection_radius: 14.,
+    )
 )

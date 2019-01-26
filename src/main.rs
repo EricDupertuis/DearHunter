@@ -69,7 +69,12 @@ fn main() -> amethyst::Result<()> {
         .with(
             systems::MoveSystem,
             "movement_system",
-            &["collision_system"]
+            &["collision_system"],
+        )
+        .with(
+            systems::BehaviorSystem,
+            "behavior_system",
+            &[],
         )
         .with(
             systems::ShootCmdSystem,

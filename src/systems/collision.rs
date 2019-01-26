@@ -54,13 +54,21 @@ impl<'s> System<'s> for CollisionSystem {
                         x: tree_tf.translation().x,
                         y: tree_tf.translation().y,
                     },
-                    width: (brect.width + tree_brect.width) / 2.,
-                    height: (brect.height + tree_brect.height) / 2.,
+                    width: tree_brect.width,
+                    height: tree_brect.height,
+                };
+                let thing = Rect {
+                    center: Point {
+                        x: transform.translation().x,
+                        y: transform.translation().y,
+                    },
+                    width: brect.width,
+                    height: brect.height,
                 };
 
-                let dx = tree.center.x - p.x;
-                let dy = tree.center.y - p.y;
-                if tree.contains(&p) {
+                if collides(&thing, &tree) {
+                    let dx = tree.center.x - p.x;
+                    let dy = tree.center.y - p.y;
                     if vel.x / dx > 0. {
                         vel.x = 0.0
                     }
@@ -73,7 +81,7 @@ impl<'s> System<'s> for CollisionSystem {
     }
 }
 
-struct Point {
+pub struct Point {
     pub x: f32,
     pub y: f32,
 }
@@ -88,7 +96,7 @@ impl Segment {
     }
 }
 
-struct Rect {
+pub struct Rect {
     pub center: Point,
     pub width: f32,
     pub height: f32,
@@ -101,14 +109,43 @@ impl Rect {
     }
     fn segment_x(&self) -> Segment {
         Segment {
-            min: self.center.x - self.width,
-            max: self.center.x + self.width,
+            min: self.center.x - self.width / 2.,
+            max: self.center.x + self.width / 2.,
         }
     }
     fn segment_y(&self) -> Segment {
         Segment {
-            min: self.center.y - self.height,
-            max: self.center.y + self.height,
+            min: self.center.y - self.height / 2.,
+            max: self.center.y + self.height / 2.,
         }
     }
+    pub fn corners(&self) -> [Point; 4] {
+        [
+            Point {
+                x: self.center.x - self.width / 2.,
+                y: self.center.y - self.height / 2.,
+            },
+            Point {
+                x: self.center.x + self.width / 2.,
+                y: self.center.y - self.height / 2.,
+            },
+            Point {
+                x: self.center.x + self.width / 2.,
+                y: self.center.y + self.height / 2.,
+            },
+            Point {
+                x: self.center.x - self.width / 2.,
+                y: self.center.y + self.height / 2.,
+            },
+        ]
+    }
+}
+
+pub fn collides(a: &Rect, b: &Rect) -> bool {
+    for corner in a.corners().iter() {
+        if b.contains(corner) {
+            return true;
+        }
+    }
+    false
 }

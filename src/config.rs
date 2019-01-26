@@ -9,6 +9,14 @@ pub struct ForestConfig {
 }
 
 #[derive(Debug, Deserialize, Serialize, Default)]
+pub struct BehaviorConfig {
+    pub prey_speed: f32,
+    pub player_detection_radius: f32,
+    pub tree_detection_radius: f32,
+}
+
+#[derive(Debug, Deserialize, Serialize, Default)]
 pub struct GameConfig {
     pub forest: ForestConfig,
+    pub behavior: BehaviorConfig,
 }

@@ -1,9 +1,10 @@
 use crate::components;
+use crate::config::GameConfig;
 
 use amethyst::{
     assets::{AssetStorage, Loader},
     core::transform::Transform,
-    ecs::prelude::{Component, NullStorage},
+    ecs::prelude::{Component, DenseVecStorage},
     prelude::*,
     renderer::{
         PngFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, SpriteSheetHandle, Texture,
@@ -12,14 +13,14 @@ use amethyst::{
     utils::application_root_dir,
 };
 
-pub struct Beast {}
-impl Component for Beast {
-    type Storage = NullStorage<Self>;
+#[derive(Default)]
+pub struct Beast {
+    pub max_speed: f32,
+    pub player_detection_radius: f32,
+    pub tree_detection_radius: f32,
 }
-impl Default for Beast {
-    fn default() -> Beast {
-        Beast {}
-    }
+impl Component for Beast {
+    type Storage = DenseVecStorage<Self>;
 }
 
 pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
@@ -74,9 +75,22 @@ pub fn initialise_beast(
         world.register::<components::VelocityCmd>();
         world.register::<components::BoundingRect>();
 
+        let (prey_speed, player_detection_radius, tree_detection_radius) = {
+            let behavior_config = &world.read_resource::<GameConfig>().behavior;
+            (
+                behavior_config.prey_speed,
+                behavior_config.player_detection_radius,
+                behavior_config.tree_detection_radius,
+            )
+        };
+
         world
             .create_entity()
-            .with(Beast {})
+            .with(Beast {
+                max_speed: prey_speed,
+                player_detection_radius: player_detection_radius,
+                tree_detection_radius: tree_detection_radius,
+            })
             .with(sprite_render.clone())
             .with(components::BoundingRect {
                 width: BEAST_SIZE,
