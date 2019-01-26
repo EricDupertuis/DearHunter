@@ -1,10 +1,9 @@
 use amethyst::{
     core::transform::Transform,
-    ecs::prelude::{Join, ReadStorage, System, WriteStorage},
+    ecs::prelude::{Join, ReadStorage, System},
 };
 
 use crate::components::BoundingRect;
-use crate::gamestate::{ARENA_HEIGHT, ARENA_WIDTH};
 use crate::home::Home;
 use crate::hunter::Hunter;
 
@@ -18,9 +17,9 @@ impl<'s> System<'s> for GoingHomeSystem {
     );
 
     fn run(&mut self, (rectangles, transforms, homes, hunters): Self::SystemData) {
-        for (hunter, hunter_brect, hunter_transform) in (&hunters, &rectangles, &transforms).join()
+        for (_hunter, hunter_brect, hunter_transform) in (&hunters, &rectangles, &transforms).join()
         {
-            for (home, home_brect, home_transform) in (&homes, &rectangles, &transforms).join() {
+            for (_home, home_brect, home_transform) in (&homes, &rectangles, &transforms).join() {
                 let x = hunter_transform.translation().x;
                 let y = hunter_transform.translation().y;
 

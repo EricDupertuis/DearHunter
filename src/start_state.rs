@@ -26,7 +26,7 @@ pub const CAMERA_WIDTH: f32 = 1920.;
 pub const CAMERA_HEIGHT: f32 = 1080.;
 
 pub fn initialise_title(world: &mut World, sprite_sheet_handle: SpriteSheetHandle) {
-    let mut transform = Transform::default();
+    let transform = Transform::default();
 
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_sheet_handle,

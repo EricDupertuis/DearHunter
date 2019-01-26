@@ -13,7 +13,6 @@ mod voronoi;
 use config::GameConfig;
 
 use amethyst::{
-    core::frame_limiter::FrameRateLimitStrategy,
     core::transform::TransformBundle,
     input::InputBundle,
     prelude::*,
@@ -22,9 +21,7 @@ use amethyst::{
     },
     utils::application_root_dir,
 };
-use gamestate::GameState;
 use start_state::StartState;
-use std::time::Duration;
 
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
