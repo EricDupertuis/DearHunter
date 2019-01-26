@@ -22,9 +22,9 @@ impl<'a> System<'a> for SpriteCullingSystem {
     ) {
         for (hunter_e, hunter_transform, _) in (&*entities, &transforms, &hunters).join() {
             for (e, tree_transform, _) in (&*entities, &transforms, &trees).join() {
-                if (tree_transform.translation().x - hunter_transform.translation().x).abs() > 5.
+                if (tree_transform.translation().x - hunter_transform.translation().x).abs() > 20.
                     || (tree_transform.translation().y - hunter_transform.translation().y).abs()
-                        > 5.
+                        > 20.
                 {
                     hidden.insert(e, Hidden);
                 } else {

@@ -1,7 +1,7 @@
 (
     forest: (
-        tree_count: 10000,
-        centroid_count: 40,
+        tree_count: 5000,
+        centroid_count: 20,
         path_width: 0.001,
         start_zone_radius: 0.015, // normalized, i.e. 1 means whole game area
     ),
