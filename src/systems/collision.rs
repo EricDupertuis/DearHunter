@@ -54,8 +54,8 @@ impl<'s> System<'s> for CollisionSystem {
                         x: tree_tf.translation().x,
                         y: tree_tf.translation().y,
                     },
-                    width: (brect.width + tree_brect.width) / 2.,
-                    height: (brect.height + tree_brect.height) / 2.,
+                    width: brect.width + tree_brect.width,
+                    height: brect.height + tree_brect.height,
                 };
 
                 let dx = tree.center.x - p.x;
@@ -101,14 +101,14 @@ impl Rect {
     }
     fn segment_x(&self) -> Segment {
         Segment {
-            min: self.center.x - self.width,
-            max: self.center.x + self.width,
+            min: self.center.x - self.width / 2.,
+            max: self.center.x + self.width / 2.,
         }
     }
     fn segment_y(&self) -> Segment {
         Segment {
-            min: self.center.y - self.height,
-            max: self.center.y + self.height,
+            min: self.center.y - self.height / 2.,
+            max: self.center.y + self.height / 2.,
         }
     }
 }
