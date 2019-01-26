@@ -2,6 +2,7 @@ mod gamestate;
 mod hunter;
 mod systems;
 mod tree;
+mod voronoi;
 
 use amethyst::{
     core::transform::TransformBundle,
