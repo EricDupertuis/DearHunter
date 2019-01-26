@@ -40,7 +40,8 @@ fn main() -> amethyst::Result<()> {
                 .with_sprite_sheet_processor()
                 .with_sprite_visibility_sorting(&["transform_system"]))?
         .with_bundle(input_bundle)?
-        .with(systems::HunterSystem, "paddle_system", &["input_system"]);
+        .with(systems::MoveSystem, "movement_system", &["input_system"])
+        .with(systems::MoveCmdSystem, "input_to_velocity_system", &["input_system"]);
 
     let assets_dir = format!("{}/assets/", app_root);
 

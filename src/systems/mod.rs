@@ -1,5 +1,7 @@
-mod hunter;
+mod moves;
+mod move_cmd;
 
 pub use self::{
-    hunter::HunterSystem,
+   move_cmd::MoveCmdSystem,
+   moves::MoveSystem,
 };

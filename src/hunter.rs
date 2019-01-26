@@ -22,6 +22,26 @@ impl Component for Hunter {
     type Storage = DenseVecStorage<Self>;
 }
 
+pub struct Velocity {
+    pub x: f32,
+    pub y: f32,
+    pub z: f32,
+}
+
+impl Component for Velocity {
+    type Storage = DenseVecStorage<Self>;
+}
+
+pub struct VelocityCmd {
+    pub x: f32,
+    pub y: f32,
+}
+
+impl Component for VelocityCmd {
+    type Storage = DenseVecStorage<Self>;
+}
+
+
 pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     // Load the sprite sheet necessary to render the graphics.
     // The texture is the pixel data
@@ -68,11 +88,16 @@ pub fn initialise_hunter(
         sprite_number: 0,
     };
 
+    world.register::<Velocity>();
+    world.register::<VelocityCmd>();
+
     world
         .create_entity()
         .with(sprite_render.clone())
         .with(Hunter::new())
         .with(transform)
         .with(Transparent)
+        .with(Velocity{x: 0., y: 0., z: 0.})
+        .with(VelocityCmd{x: 0., y: 0.})
         .build();
 }
