@@ -3,6 +3,7 @@ use crate::beast;
 use crate::config::GameConfig;
 use crate::hunter;
 use crate::tree;
+use crate::bullet;
 use crate::voronoi;
 
 use amethyst::{
@@ -56,6 +57,7 @@ impl SimpleState for GameState {
         let hunter_sprite = hunter::load_sprite_sheet(world);
         let tree_sprite = tree::load_sprite_sheet(world);
         let beast_sprite = beast::load_sprite_sheet(world);
+        let bullet_sprite = bullet::load_sprite_sheet(world);
 
         let hunter =
             hunter::initialise_hunter(world, hunter_sprite, ARENA_WIDTH * 0.5, ARENA_HEIGHT * 0.5);
@@ -65,6 +67,12 @@ impl SimpleState for GameState {
             beast_sprite,
             &[ARENA_WIDTH * 0.2, ARENA_WIDTH * 0.4, ARENA_WIDTH * 0.8],
             &[ARENA_HEIGHT * 0.2, ARENA_HEIGHT * 0.4, ARENA_HEIGHT * 0.8],
+        );
+
+        let bullet =  bullet::initialise_bullet(
+            world,
+            bullet_sprite,
+            ARENA_WIDTH * 0.7, ARENA_HEIGHT * 0.7
         );
 
         let (tree_count, centroid_count, path_width, start_radius) = {

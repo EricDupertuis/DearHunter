@@ -6,6 +6,7 @@ mod hunter;
 mod systems;
 mod tree;
 mod voronoi;
+mod bullet;
 
 use config::GameConfig;
 
