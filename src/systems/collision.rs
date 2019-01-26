@@ -24,6 +24,8 @@ impl<'s> System<'s> for CollisionSystem {
             vel.y = cmd.y;
         }
 
+        return;
+
         // Perform collision checks on arena boundaries
         for (brect, transform, vel) in (&rectangles, &transforms, &mut velocities).join() {
             let x = transform.translation().x;
@@ -67,6 +69,7 @@ impl<'s> System<'s> for CollisionSystem {
                 };
 
                 if collides(&thing, &tree) {
+                    continue;
                     let dx = tree.center.x - p.x;
                     let dy = tree.center.y - p.y;
                     if vel.x / dx > 0. {

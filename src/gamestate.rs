@@ -18,8 +18,11 @@ use amethyst::{
 
 pub struct GameState;
 
-pub const ARENA_WIDTH: f32 = 50.0;
+pub const ARENA_WIDTH: f32 = 500.0;
 pub const ARENA_HEIGHT: f32 = ARENA_WIDTH * 1080. / 1920.;
+
+pub const CAMERA_WIDTH: f32 = 50.0;
+pub const CAMERA_HEIGHT: f32 = CAMERA_WIDTH * 1080. / 1920.;
 
 fn initialise_camera(world: &mut World, parent: Entity) {
     let mut transform = Transform::default();
@@ -27,9 +30,9 @@ fn initialise_camera(world: &mut World, parent: Entity) {
 
     // In case of disappearing sprites, check far plane and z camera transform
     transform.set_xyz(
-        -(ARENA_WIDTH / 2.) * scale,
-        -(ARENA_HEIGHT / 2.) * scale,
-        ARENA_HEIGHT * scale,
+        -(CAMERA_WIDTH / 2.) * scale,
+        -(CAMERA_HEIGHT / 2.) * scale,
+        CAMERA_HEIGHT * scale,
     );
     transform.set_scale(scale, scale, scale);
 
@@ -37,11 +40,11 @@ fn initialise_camera(world: &mut World, parent: Entity) {
         .create_entity()
         .with(Camera::from(Projection::Orthographic(Orthographic3::new(
             0.0,
-            ARENA_WIDTH,
+            CAMERA_WIDTH,
             0.0,
-            ARENA_HEIGHT,
-            0.0,                // near plane
-            ARENA_HEIGHT * 10., // far plane. z_depth = height since we're using an inclined plane to show depth in 2D.
+            CAMERA_HEIGHT,
+            0.0,                 // near plane
+            CAMERA_HEIGHT * 10., // far plane. z_depth = height since we're using an inclined plane to show depth in 2D.
         ))))
         .with(Parent { entity: parent })
         .with(transform)

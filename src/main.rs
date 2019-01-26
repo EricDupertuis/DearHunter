@@ -12,6 +12,7 @@ mod voronoi;
 use config::GameConfig;
 
 use amethyst::{
+    core::frame_limiter::FrameRateLimitStrategy,
     core::transform::TransformBundle,
     input::InputBundle,
     prelude::*,
@@ -21,6 +22,7 @@ use amethyst::{
     utils::application_root_dir,
 };
 use gamestate::GameState;
+use std::time::Duration;
 
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
@@ -52,10 +54,15 @@ fn main() -> amethyst::Result<()> {
 
     let game_data = GameDataBuilder::default()
         .with_bundle(TransformBundle::new())?
+        .with(
+            systems::SpriteCullingSystem,
+            "sprite_culling",
+            &["transform_system"],
+        )
         .with_bundle(
             RenderBundle::new(pipe, Some(config))
                 .with_sprite_sheet_processor()
-                .with_sprite_visibility_sorting(&["transform_system"]),
+                .with_sprite_visibility_sorting(&["transform_system", "sprite_culling"]),
         )?
         .with_bundle(input_bundle)?
         .with(
@@ -84,6 +91,10 @@ fn main() -> amethyst::Result<()> {
     let assets_dir = format!("{}/resources/", app_root);
 
     let mut game = Application::build(assets_dir, GameState)?
+        //.with_frame_limit(
+        //    FrameRateLimitStrategy::SleepAndYield(Duration::from_millis(2)),
+        //    60,
+        //)
         .with_resource(game_config)
         .build(game_data)?;
 
