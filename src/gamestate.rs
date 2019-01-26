@@ -67,16 +67,18 @@ impl SimpleState for GameState {
             &[ARENA_HEIGHT * 0.2, ARENA_HEIGHT * 0.4, ARENA_HEIGHT * 0.8],
         );
 
-        let (tree_count, centroid_count, path_width) = {
+        let (tree_count, centroid_count, path_width, start_radius) = {
             let forest_config = &world.read_resource::<GameConfig>().forest;
             (
                 forest_config.tree_count,
                 forest_config.centroid_count,
                 forest_config.path_width,
+                forest_config.start_zone_radius,
             )
         };
 
-        let points = voronoi::generate_voronoi(tree_count, centroid_count, path_width);
+        let points =
+            voronoi::generate_voronoi(tree_count, centroid_count, path_width, start_radius);
 
         for p in points.iter() {
             let x = p.x * ARENA_WIDTH;

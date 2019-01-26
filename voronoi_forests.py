@@ -25,7 +25,7 @@ def distance_to_points(point, points):
 def is_on_path(point, points, path_width):
     distances = distance_to_points(point, points)
     distances.sort()
-    if abs(distances[0] - distances[1]) < path_width:
+    if abs(distances[0] - distances[1]) < path_width * random.gauss(1., 0.3):
         return True
 
     return False
