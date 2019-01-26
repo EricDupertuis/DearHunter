@@ -9,6 +9,8 @@ use amethyst::{
     },
 };
 
+use rand::Rng;
+
 use crate::components;
 
 pub struct Tree {}
@@ -50,12 +52,16 @@ pub fn initialise_tree(world: &mut World, sprite_sheet_handle: SpriteSheetHandle
     transform.set_xyz(x, y, -y);
 
     const TREE_SIZE: f32 = 4.;
-    let scale = TREE_SIZE / 138.;
+    let scale = TREE_SIZE / 256.;
+
     transform.set_scale(scale, scale, scale);
+
+    let mut rng = rand::thread_rng();
+    let sprite_number = rng.gen_range(0, 4); // TODO: How many trees
 
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_sheet_handle,
-        sprite_number: 0,
+        sprite_number: sprite_number,
     };
 
     world.register::<Tree>();
