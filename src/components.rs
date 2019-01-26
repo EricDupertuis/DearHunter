@@ -1,7 +1,4 @@
-use amethyst::{
-    ecs::prelude::{Component, DenseVecStorage},
-};
-
+use amethyst::ecs::prelude::{Component, DenseVecStorage};
 
 pub struct Velocity {
     pub x: f32,
@@ -22,4 +19,11 @@ impl Component for VelocityCmd {
     type Storage = DenseVecStorage<Self>;
 }
 
+pub struct BoundingRect {
+    pub width: f32,
+    pub height: f32,
+}
 
+impl Component for BoundingRect {
+    type Storage = DenseVecStorage<Self>;
+}

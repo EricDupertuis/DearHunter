@@ -3,7 +3,6 @@ use crate::components;
 use amethyst::{
     assets::{AssetStorage, Loader},
     core::transform::Transform,
-    ecs::prelude::{Component, DenseVecStorage},
     prelude::*,
     renderer::{
         PngFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, SpriteSheetHandle, Texture,
@@ -11,18 +10,6 @@ use amethyst::{
     },
     utils::application_root_dir,
 };
-
-pub struct Beast {}
-
-impl Beast {
-    fn new() -> Beast {
-        Beast {}
-    }
-}
-
-impl Component for Beast {
-    type Storage = DenseVecStorage<Self>;
-}
 
 pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     // Load the sprite sheet necessary to render the graphics.
@@ -60,10 +47,10 @@ pub fn initialise_beast(
 ) {
     for (x, y) in xs.iter().zip(ys.iter()) {
         let mut transform = Transform::default();
-
         transform.set_xyz(*x, *y, -*y);
 
-        let scale = 2. / 16.;
+        const BEAST_SIZE: f32 = 2.;
+        let scale = BEAST_SIZE / 16.;
         transform.set_scale(scale, scale, scale);
 
         let sprite_render = SpriteRender {
@@ -77,7 +64,10 @@ pub fn initialise_beast(
         world
             .create_entity()
             .with(sprite_render.clone())
-            .with(Beast::new())
+            .with(components::BoundingRect {
+                width: BEAST_SIZE,
+                height: BEAST_SIZE,
+            })
             .with(transform)
             .with(Transparent)
             .with(components::Velocity {

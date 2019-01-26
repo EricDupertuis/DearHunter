@@ -45,10 +45,6 @@ impl SimpleState for GameState {
         let tree_sprite = tree::load_sprite_sheet(world);
         let beast_sprite = beast::load_sprite_sheet(world);
 
-        world.register::<hunter::Hunter>();
-        world.register::<tree::Tree>();
-        world.register::<beast::Beast>();
-
         hunter::initialise_hunter(world, hunter_sprite, ARENA_WIDTH * 0.5, ARENA_HEIGHT * 0.5);
 
         beast::initialise_beast(

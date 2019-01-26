@@ -1,7 +1,6 @@
 use amethyst::{
     assets::{AssetStorage, Loader},
     core::transform::Transform,
-    ecs::prelude::{Component, DenseVecStorage},
     prelude::*,
     renderer::{
         PngFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, SpriteSheetHandle, Texture,
@@ -9,25 +8,7 @@ use amethyst::{
     },
 };
 
-const TREE_SIZE: f32 = 8.;
-
-pub struct Tree {
-    pub width: f32,
-    pub height: f32,
-}
-
-impl Tree {
-    fn new() -> Tree {
-        Tree {
-            width: TREE_SIZE,
-            height: TREE_SIZE,
-        }
-    }
-}
-
-impl Component for Tree {
-    type Storage = DenseVecStorage<Self>;
-}
+use crate::components;
 
 pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     let texture_handle = {
@@ -55,9 +36,9 @@ pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
 
 pub fn initialise_tree(world: &mut World, sprite_sheet_handle: SpriteSheetHandle, x: f32, y: f32) {
     let mut transform = Transform::default();
-
     transform.set_xyz(x, y, -y);
 
+    const TREE_SIZE: f32 = 8.;
     let scale = TREE_SIZE / 138.;
     transform.set_scale(scale, scale, scale);
 
@@ -66,10 +47,15 @@ pub fn initialise_tree(world: &mut World, sprite_sheet_handle: SpriteSheetHandle
         sprite_number: 0,
     };
 
+    world.register::<components::BoundingRect>();
+
     world
         .create_entity()
         .with(sprite_render.clone())
-        .with(Tree::new())
+        .with(components::BoundingRect {
+            width: TREE_SIZE,
+            height: TREE_SIZE,
+        })
         .with(transform)
         .with(Transparent)
         .build();

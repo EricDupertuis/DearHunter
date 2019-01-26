@@ -3,30 +3,12 @@ use crate::components;
 use amethyst::{
     assets::{AssetStorage, Loader},
     core::transform::Transform,
-    ecs::prelude::{Component, DenseVecStorage},
     prelude::*,
     renderer::{
         PngFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, SpriteSheetHandle, Texture,
         TextureMetadata, Transparent,
     },
 };
-
-pub struct Hunter {
-    pub width: f32,
-    pub height: f32,
-}
-impl Hunter {
-    fn new() -> Hunter {
-        Hunter {
-            width: 2.0,
-            height: 2.0,
-        }
-    }
-}
-
-impl Component for Hunter {
-    type Storage = DenseVecStorage<Self>;
-}
 
 pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     let texture_handle = {
@@ -59,10 +41,10 @@ pub fn initialise_hunter(
     y: f32,
 ) {
     let mut transform = Transform::default();
-
     transform.set_xyz(x, y, -y);
 
-    let scale = 2. / 16.;
+    const HUNTER_SIZE: f32 = 2.;
+    let scale = HUNTER_SIZE / 16.;
     transform.set_scale(scale, scale, scale);
 
     let sprite_render = SpriteRender {
@@ -72,11 +54,15 @@ pub fn initialise_hunter(
 
     world.register::<components::Velocity>();
     world.register::<components::VelocityCmd>();
+    world.register::<components::BoundingRect>();
 
     world
         .create_entity()
         .with(sprite_render.clone())
-        .with(Hunter::new())
+        .with(components::BoundingRect {
+            width: HUNTER_SIZE,
+            height: HUNTER_SIZE,
+        })
         .with(transform)
         .with(Transparent)
         .with(components::Velocity {
