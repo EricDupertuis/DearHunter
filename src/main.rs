@@ -61,7 +61,8 @@ fn main() -> amethyst::Result<()> {
             &["collision_system"],
         );
 
-    let assets_dir = format!("{}/assets/", app_root);
+    // Base path where we look for assets/textures/sprites
+    let assets_dir = format!("{}/resources/", app_root);
 
     let mut game = Application::new(assets_dir, GameState, game_data)?;
     game.run();

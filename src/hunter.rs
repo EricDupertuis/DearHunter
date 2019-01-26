@@ -7,7 +7,6 @@ use amethyst::{
         PngFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, SpriteSheetHandle, Texture,
         TextureMetadata, Transparent,
     },
-    utils::application_root_dir,
 };
 
 pub struct Hunter {
@@ -47,15 +46,11 @@ impl Component for VelocityCmd {
 }
 
 pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
-    // Load the sprite sheet necessary to render the graphics.
-    // The texture is the pixel data
-    // `sprite_sheet` is the layout of the sprites on the image
-    // `texture_handle` is a cloneable reference to the texture
     let texture_handle = {
         let loader = world.read_resource::<Loader>();
         let texture_storage = world.read_resource::<AssetStorage<Texture>>();
         loader.load(
-            format!("{}/resources/sprites/hunter.png", application_root_dir()),
+            "sprites/hunter.png",
             PngFormat,
             TextureMetadata::srgb_scale(),
             (),
@@ -66,9 +61,9 @@ pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     let loader = world.read_resource::<Loader>();
     let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
     loader.load(
-        format!("{}/resources/sprites/hunter.ron", application_root_dir()), // Here we load the associated ron file
+        "sprites/hunter.ron",
         SpriteSheetFormat,
-        texture_handle, // We pass it the texture we want it to use
+        texture_handle,
         (),
         &sprite_sheet_store,
     )
