@@ -8,8 +8,6 @@ use crate::tree::Tree;
 use crate::beast::Beast;
 use crate::hunter::Hunter;
 
-
-
 pub struct BehaviorSystem;
 
 const PREY_SPEED: f32 = 2.;
