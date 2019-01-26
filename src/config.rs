@@ -9,3 +9,8 @@ pub struct ForestConfig {
     pub centroid_count: usize,
     pub path_width: f32,
 }
+
+#[derive(Debug, Deserialize, Serialize, Default)]
+pub struct GameConfig {
+    pub forest: ForestConfig,
+}

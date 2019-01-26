@@ -7,7 +7,7 @@ mod systems;
 mod tree;
 mod voronoi;
 
-use config::ForestConfig;
+use config::GameConfig;
 
 use amethyst::{
     core::transform::TransformBundle,
@@ -30,8 +30,10 @@ fn main() -> amethyst::Result<()> {
 
     let binding_path = format!("{}/resources/bindings_config.ron", application_root_dir());
 
-    let forest_config_file = format!("{}/resources/forest_config.ron", application_root_dir());
-    let forest_config = ForestConfig::load(&forest_config_file);
+    let game_config = {
+        let file = format!("{}/resources/game_config.ron", application_root_dir());
+        GameConfig::load(&file)
+    };
 
     let input_bundle =
         InputBundle::<String, String>::new().with_bindings_from_file(binding_path)?;
@@ -74,7 +76,7 @@ fn main() -> amethyst::Result<()> {
     let assets_dir = format!("{}/resources/", app_root);
 
     let mut game = Application::build(assets_dir, GameState)?
-        .with_resource(forest_config)
+        .with_resource(game_config)
         .build(game_data)?;
 
     game.run();

@@ -1,6 +1,6 @@
 extern crate rand;
 use crate::beast;
-use crate::config::ForestConfig;
+use crate::config::GameConfig;
 use crate::hunter;
 use crate::tree;
 use crate::voronoi;
@@ -56,7 +56,7 @@ impl SimpleState for GameState {
         );
 
         let (tree_count, centroid_count, path_width) = {
-            let forest_config = &world.read_resource::<ForestConfig>();
+            let forest_config = &world.read_resource::<GameConfig>().forest;
             (
                 forest_config.tree_count,
                 forest_config.centroid_count,
