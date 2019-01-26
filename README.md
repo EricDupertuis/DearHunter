@@ -3,12 +3,12 @@
 ## Run
 
 ```bash
-cargo run +nightly
+cargo run --release
 ```
 
 To only display warning/error logs
 ```bash
-AMETHYST_LOG_LEVEL_FILTER=WARN cargo run
+AMETHYST_LOG_LEVEL_FILTER=WARN cargo run --release
 ```
 
 # Coordinate system for set_xyz()
