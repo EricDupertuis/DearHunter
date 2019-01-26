@@ -12,9 +12,6 @@ use amethyst::{
 use crate::components;
 use crate::config::ForestConfig;
 
-const TREE_HEIGHT: f32 = 64.;
-const TREE_WIDTH: f32 = 64.;
-
 pub struct Tree {}
 impl Component for Tree {
     type Storage = NullStorage<Self>;
@@ -53,7 +50,7 @@ pub fn initialise_tree(world: &mut World, sprite_sheet_handle: SpriteSheetHandle
     let mut transform = Transform::default();
     transform.set_xyz(x, y, -y);
 
-    const TREE_SIZE: f32 = 8.;
+    const TREE_SIZE: f32 = 4.;
     let scale = TREE_SIZE / 138.;
     transform.set_scale(scale, scale, scale);
 
