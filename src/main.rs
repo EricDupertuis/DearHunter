@@ -5,6 +5,7 @@ mod config;
 mod gamestate;
 mod home;
 mod hunter;
+mod start_state;
 mod systems;
 mod tree;
 mod voronoi;
@@ -22,6 +23,7 @@ use amethyst::{
     utils::application_root_dir,
 };
 use gamestate::GameState;
+use start_state::StartState;
 use std::time::Duration;
 
 fn main() -> amethyst::Result<()> {
@@ -96,11 +98,7 @@ fn main() -> amethyst::Result<()> {
     // Base path where we look for assets/textures/sprites
     let assets_dir = format!("{}/resources/", app_root);
 
-    let mut game = Application::build(assets_dir, GameState)?
-        //.with_frame_limit(
-        //    FrameRateLimitStrategy::SleepAndYield(Duration::from_millis(2)),
-        //    60,
-        //)
+    let mut game = Application::build(assets_dir, StartState)?
         .with_resource(game_config)
         .build(game_data)?;
 
