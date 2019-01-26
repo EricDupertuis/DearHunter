@@ -8,8 +8,6 @@ use crate::tree::Tree;
 use crate::beast::Beast;
 use crate::hunter::Hunter;
 
-
-
 pub struct BehaviorSystem;
 
 impl<'s> System<'s> for BehaviorSystem {
