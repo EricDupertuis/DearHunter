@@ -72,8 +72,8 @@ pub fn initialise_tree(world: &mut World, sprite_sheet_handle: SpriteSheetHandle
         .with(Tree {})
         .with(sprite_render.clone())
         .with(components::BoundingRect {
-            width: TREE_SIZE,
-            height: TREE_SIZE,
+            width: TREE_SIZE / 4.,
+            height: TREE_SIZE / 2.,
         })
         .with(transform)
         .with(Transparent)
