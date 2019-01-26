@@ -69,7 +69,12 @@ fn main() -> amethyst::Result<()> {
         .with(
             systems::MoveSystem,
             "movement_system",
-            &["collision_system"],
+            &["collision_system"]
+        )
+        .with(
+            systems::ShootCmdSystem,
+            "shoot_cmd_system",
+            &["input_system"]
         );
 
     // Base path where we look for assets/textures/sprites

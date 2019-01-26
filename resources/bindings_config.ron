@@ -10,6 +10,6 @@
         )
     },
     actions: {
-        "fire": [ [Mouse(Left)], [Key(X)] ] // Multiple bindings for one action
+        "fire": [ [Mouse(Left)] ]
     }
 )

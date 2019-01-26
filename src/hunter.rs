@@ -68,6 +68,7 @@ pub fn initialise_hunter(
     world.register::<components::Velocity>();
     world.register::<components::VelocityCmd>();
     world.register::<components::BoundingRect>();
+    world.register::<components::ShootCmd>();
 
     world
         .create_entity()
@@ -85,5 +86,6 @@ pub fn initialise_hunter(
             z: 0.,
         })
         .with(components::VelocityCmd { x: 0., y: 0. })
+        .with(components::ShootCmd {x: 0., y: 0., speed: 0.})
         .build()
 }
