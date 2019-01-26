@@ -2,6 +2,7 @@ extern crate rand;
 use crate::hunter;
 use crate::tree;
 use crate::beast;
+use crate::voronoi;
 use rand::Rng;
 
 use amethyst::{
@@ -62,9 +63,15 @@ impl SimpleState for GameState {
 
         let mut rng = rand::thread_rng();
 
-        for _ in 1..100 {
-            let x = (rng.gen::<f32>()) * ARENA_WIDTH;
-            let y = (rng.gen::<f32>()) * ARENA_HEIGHT;
+        // TODO: Fetch this from RON
+        let tree_cnt = 200;
+        let centroid_cnt = 30;
+        let path_width = 0.03;
+        let points = voronoi::generate_voronoi(tree_cnt, centroid_cnt, path_width);
+
+        for p in points.iter() {
+            let x = p.x * ARENA_WIDTH;
+            let y = p.y * ARENA_HEIGHT;
             tree::initialise_tree(world, tree_sprite.clone(), x, y);
         }
 

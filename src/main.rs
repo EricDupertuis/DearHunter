@@ -4,6 +4,7 @@ mod beast;
 mod tree;
 mod systems;
 mod velcomp;
+mod voronoi;
 
 use amethyst::{
     core::transform::TransformBundle,
