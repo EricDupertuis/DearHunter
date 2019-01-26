@@ -3,12 +3,23 @@ use crate::components;
 use amethyst::{
     assets::{AssetStorage, Loader},
     core::transform::Transform,
+    ecs::prelude::{Component, NullStorage},
     prelude::*,
     renderer::{
         PngFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, SpriteSheetHandle, Texture,
         TextureMetadata, Transparent,
     },
 };
+
+pub struct Hunter {}
+impl Component for Hunter {
+    type Storage = NullStorage<Self>;
+}
+impl Default for Hunter {
+    fn default() -> Hunter {
+        Hunter {}
+    }
+}
 
 pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     let texture_handle = {
@@ -52,12 +63,14 @@ pub fn initialise_hunter(
         sprite_number: 0,
     };
 
+    world.register::<Hunter>();
     world.register::<components::Velocity>();
     world.register::<components::VelocityCmd>();
     world.register::<components::BoundingRect>();
 
     world
         .create_entity()
+        .with(Hunter {})
         .with(sprite_render.clone())
         .with(components::BoundingRect {
             width: HUNTER_SIZE,

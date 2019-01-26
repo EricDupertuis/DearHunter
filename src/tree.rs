@@ -1,6 +1,7 @@
 use amethyst::{
     assets::{AssetStorage, Loader},
     core::transform::Transform,
+    ecs::prelude::{Component, NullStorage},
     prelude::*,
     renderer::{
         PngFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, SpriteSheetHandle, Texture,
@@ -9,6 +10,16 @@ use amethyst::{
 };
 
 use crate::components;
+
+pub struct Tree {}
+impl Component for Tree {
+    type Storage = NullStorage<Self>;
+}
+impl Default for Tree {
+    fn default() -> Tree {
+        Tree {}
+    }
+}
 
 pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     let texture_handle = {
@@ -47,10 +58,12 @@ pub fn initialise_tree(world: &mut World, sprite_sheet_handle: SpriteSheetHandle
         sprite_number: 0,
     };
 
+    world.register::<Tree>();
     world.register::<components::BoundingRect>();
 
     world
         .create_entity()
+        .with(Tree {})
         .with(sprite_render.clone())
         .with(components::BoundingRect {
             width: TREE_SIZE,

@@ -3,6 +3,7 @@ use crate::components;
 use amethyst::{
     assets::{AssetStorage, Loader},
     core::transform::Transform,
+    ecs::prelude::{Component, NullStorage},
     prelude::*,
     renderer::{
         PngFormat, SpriteRender, SpriteSheet, SpriteSheetFormat, SpriteSheetHandle, Texture,
@@ -10,6 +11,16 @@ use amethyst::{
     },
     utils::application_root_dir,
 };
+
+pub struct Beast {}
+impl Component for Beast {
+    type Storage = NullStorage<Self>;
+}
+impl Default for Beast {
+    fn default() -> Beast {
+        Beast {}
+    }
+}
 
 pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     // Load the sprite sheet necessary to render the graphics.
@@ -58,11 +69,14 @@ pub fn initialise_beast(
             sprite_number: 0,
         };
 
+        world.register::<Beast>();
         world.register::<components::Velocity>();
         world.register::<components::VelocityCmd>();
+        world.register::<components::BoundingRect>();
 
         world
             .create_entity()
+            .with(Beast {})
             .with(sprite_render.clone())
             .with(components::BoundingRect {
                 width: BEAST_SIZE,
