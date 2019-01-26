@@ -1,6 +1,5 @@
 extern crate rand;
 use crate::beast;
-use crate::bullet;
 use crate::config::GameConfig;
 use crate::home;
 use crate::hunter;

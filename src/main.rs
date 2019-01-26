@@ -1,5 +1,4 @@
 mod beast;
-mod bullet;
 mod components;
 mod config;
 mod gamestate;
