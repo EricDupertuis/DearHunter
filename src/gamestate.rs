@@ -3,6 +3,7 @@ use crate::beast;
 use crate::config::GameConfig;
 use crate::home;
 use crate::hunter;
+use crate::score;
 use crate::tree;
 use crate::voronoi;
 
@@ -109,5 +110,6 @@ impl SimpleState for GameState {
         }
 
         initialise_camera(world, hunter);
+        score::initialise_score(world);
     }
 }

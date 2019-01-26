@@ -4,6 +4,7 @@ mod config;
 mod gamestate;
 mod home;
 mod hunter;
+mod score;
 mod start_state;
 mod systems;
 mod tree;
@@ -18,6 +19,7 @@ use amethyst::{
     renderer::{
         ColorMask, DepthMode, DisplayConfig, DrawFlat2D, Pipeline, RenderBundle, Stage, ALPHA,
     },
+    ui::{DrawUi, UiBundle},
     utils::application_root_dir,
 };
 use start_state::StartState;
@@ -47,12 +49,14 @@ fn main() -> amethyst::Result<()> {
                 ColorMask::all(),
                 ALPHA,
                 Some(DepthMode::LessEqualWrite),
-            )),
+            ))
+            .with_pass(DrawUi::new()),
     );
 
     let game_data = GameDataBuilder::default()
         .with_bundle(TransformBundle::new())?
         .with_bundle(input_bundle)?
+        .with_bundle(UiBundle::<String, String>::new())?
         .with(
             systems::SpriteCullingSystem,
             "sprite_culling",
