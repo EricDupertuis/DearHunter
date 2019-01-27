@@ -9,6 +9,8 @@ use crate::score;
 use crate::tree;
 use crate::voronoi;
 
+use rand::Rng;
+
 use amethyst::{
     core::nalgebra::{Orthographic3, Point2},
     core::shrev::{EventChannel, ReaderId},
@@ -83,12 +85,21 @@ impl SimpleState for GameState {
 
         let hunter =
             hunter::initialise_hunter(world, hunter_sprite, ARENA_WIDTH * 0.5, ARENA_HEIGHT * 0.5);
+        
+        let mut rng = rand::thread_rng();
 
+        let mut bw = [0. as f32; 100];
+        let mut bh = [0. as f32; 100];
+
+        for i in {0..bw.len()}{
+            bw[i] = ARENA_WIDTH * rng.gen_range(0., 1.);
+            bh[i] = ARENA_HEIGHT * rng.gen_range(0., 1.);
+        }
         beast::initialise_beast(
             world,
             beast_sprite,
-            &[ARENA_WIDTH * 0.9, ARENA_WIDTH * 0.93, ARENA_WIDTH * 0.95, ],
-            &[ARENA_HEIGHT * 0.9, ARENA_HEIGHT * 0.93, ARENA_HEIGHT * 0.95, ],
+            &bw,
+            &bh,
         );
 
         let (tree_count, centroid_count, path_width, start_radius) = {
