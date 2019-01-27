@@ -1,6 +1,6 @@
 extern crate amethyst;
 use crate::score;
-use crate::states::CreditState;
+use crate::states::StartState;
 use amethyst::{
     assets::{AssetStorage, Loader},
     core::nalgebra::Orthographic3,
@@ -14,12 +14,12 @@ use amethyst::{
     },
 };
 
-pub struct WinState;
+pub struct CreditState;
 
 #[derive(Default)]
-pub struct WinScreen;
+pub struct CreditScreen;
 
-impl Component for WinScreen {
+impl Component for CreditScreen {
     type Storage = NullStorage<Self>;
 }
 
@@ -34,11 +34,11 @@ pub fn initialise_title(world: &mut World, sprite_sheet_handle: SpriteSheetHandl
         sprite_number: 0,
     };
 
-    world.register::<WinScreen>();
+    world.register::<CreditScreen>();
 
     world
         .create_entity()
-        .with(WinScreen {})
+        .with(CreditScreen {})
         .with(sprite_render.clone())
         .with(transform)
         .with(Transparent)
@@ -69,7 +69,7 @@ pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
         let loader = world.read_resource::<Loader>();
         let texture_storage = world.read_resource::<AssetStorage<Texture>>();
         loader.load(
-            "sprites/win.png",
+            "sprites/credits.png",
             PngFormat,
             TextureMetadata::srgb_scale(),
             (),
@@ -80,7 +80,7 @@ pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     let loader = world.read_resource::<Loader>();
     let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
     loader.load(
-        "sprites/win.ron",
+        "sprites/credits.ron",
         SpriteSheetFormat,
         texture_handle,
         (),
@@ -88,7 +88,7 @@ pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     )
 }
 
-impl SimpleState for WinState {
+impl SimpleState for CreditState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
         let sprite = load_sprite_sheet(world);
@@ -105,7 +105,7 @@ impl SimpleState for WinState {
         if let StateEvent::Window(event) = &event {
             if is_key_down(&event, VirtualKeyCode::Space) {
                 data.world.delete_all();
-                return Trans::Switch(Box::new(CreditState));
+                return Trans::Switch(Box::new(StartState));
             }
         }
         Trans::None
