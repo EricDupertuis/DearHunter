@@ -37,3 +37,8 @@ y
 |    |
 0-------> x
 ```
+
+## Licenses for audio assets
+
+ - [`Kevin_MacLeod-Hot_Pursuit.ogg` (BY)](https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1700084)
+ - `score.ogg`: Contributed by Richard Dodd, released into the Public Domain (CC0)
