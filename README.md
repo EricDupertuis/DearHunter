@@ -2,6 +2,16 @@
 
 A project for the 2019's Global Game Jam.
 
+## Gameplay
+
+You play a hunter, you've been hunting for your family in the forest.
+Now it's late, you have to get back home to feed your family.
+But the forest is dark, you lost your path, and there are hogs around chasing you.
+You have to get home without hitting on hogs and before your time is up (and your family dies of hunger!).
+
+To move around use `W`,`A`,`S`,`D` keys.
+To pass screens use `<Space>`.
+
 ## Quickstart
 
 ```bash
