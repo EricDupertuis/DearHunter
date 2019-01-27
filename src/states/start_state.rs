@@ -100,6 +100,13 @@ impl SimpleState for StartState {
         audio::change_track(world, audio::MusicTracks::Start);
     }
 
+    fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
+        let world = data.world;
+
+        // Stop the music
+        audio::change_track(world, audio::MusicTracks::Silent);
+    }
+
     fn handle_event(
         &mut self,
         data: StateData<'_, GameData<'_, '_>>,

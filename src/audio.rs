@@ -65,7 +65,7 @@ pub fn change_track(world: &mut World, track: MusicTracks) {
     sink.play();
 
     match track {
-        MusicTracks::Silent => sink.set_volume(0.7),
+        MusicTracks::Silent => sink.set_volume(0.),
         MusicTracks::Start => sink.set_volume(0.9),
         MusicTracks::Game => sink.set_volume(0.5),
     };
