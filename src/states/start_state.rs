@@ -1,5 +1,5 @@
 extern crate amethyst;
-use crate::gamestate::GameState;
+use crate::states::GameState;
 use crate::score;
 use amethyst::{
     assets::{AssetStorage, Loader},

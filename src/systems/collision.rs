@@ -4,7 +4,7 @@ use amethyst::{
 };
 
 use crate::components::{BoundingRect, Velocity, VelocityCmd};
-use crate::gamestate::{ARENA_HEIGHT, ARENA_WIDTH};
+use crate::states::{ARENA_HEIGHT, ARENA_WIDTH};
 use crate::tree::Tree;
 
 pub struct CollisionSystem;

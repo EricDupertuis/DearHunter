@@ -1,11 +1,10 @@
 mod beast;
 mod components;
 mod config;
-mod gamestate;
+mod states;
 mod home;
 mod hunter;
 mod score;
-mod start_state;
 mod systems;
 mod tree;
 mod voronoi;
@@ -22,7 +21,7 @@ use amethyst::{
     ui::{DrawUi, UiBundle},
     utils::application_root_dir,
 };
-use start_state::StartState;
+use states::StartState;
 
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
