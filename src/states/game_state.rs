@@ -2,7 +2,6 @@ extern crate rand;
 use crate::audio;
 use crate::beast;
 use crate::config::GameConfig;
-use crate::events;
 use crate::home;
 use crate::hunter;
 use crate::score;
@@ -11,7 +10,6 @@ use crate::voronoi;
 
 use amethyst::{
     core::nalgebra::{Orthographic3, Point2},
-    core::shrev::{EventChannel, ReaderId},
     core::transform::Transform,
     core::Parent,
     ecs::Entity,
@@ -19,16 +17,7 @@ use amethyst::{
     renderer::{Camera, Projection},
 };
 
-#[derive(Default)]
-pub struct GameState {
-    reader: Option<ReaderId<events::GameEndEvent>>,
-}
-
-impl GameState {
-    pub fn new() -> Self {
-        GameState { reader: None }
-    }
-}
+pub struct GameState;
 
 pub const ARENA_WIDTH: f32 = 500.0;
 pub const ARENA_HEIGHT: f32 = ARENA_WIDTH * 1080. / 1920.;
@@ -68,8 +57,6 @@ fn initialise_camera(world: &mut World, parent: Entity) {
 impl SimpleState for GameState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
-
-        world.add_resource(EventChannel::<events::GameEndEvent>::new());
 
         // Load the spritesheet necessary to render the graphics.
         // `spritesheet` is the layout of the sprites on the image;
