@@ -2,6 +2,7 @@ mod audio;
 mod beast;
 mod components;
 mod config;
+mod game_termination;
 mod home;
 mod hunter;
 mod score;
@@ -23,6 +24,7 @@ use amethyst::{
     ui::{DrawUi, UiBundle},
     utils::application_root_dir,
 };
+use game_termination::GameTermination;
 use states::StartState;
 
 fn main() -> amethyst::Result<()> {

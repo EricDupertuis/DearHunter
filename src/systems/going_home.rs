@@ -1,9 +1,10 @@
 use amethyst::{
     core::transform::Transform,
-    ecs::prelude::{Join, ReadStorage, System},
+    ecs::prelude::{Join, ReadStorage, Resources, System, Write},
 };
 
 use crate::components::BoundingRect;
+use crate::game_termination::GameTermination;
 use crate::home::Home;
 use crate::hunter::Hunter;
 
@@ -14,9 +15,13 @@ impl<'s> System<'s> for GoingHomeSystem {
         ReadStorage<'s, Transform>,
         ReadStorage<'s, Home>,
         ReadStorage<'s, Hunter>,
+        Write<'s, GameTermination>,
     );
 
-    fn run(&mut self, (rectangles, transforms, homes, hunters): Self::SystemData) {
+    fn run(
+        &mut self,
+        (rectangles, transforms, homes, hunters, mut game_termination): Self::SystemData,
+    ) {
         for (_hunter, hunter_brect, hunter_transform) in (&hunters, &rectangles, &transforms).join()
         {
             for (_home, home_brect, home_transform) in (&homes, &rectangles, &transforms).join() {
@@ -33,6 +38,7 @@ impl<'s> System<'s> for GoingHomeSystem {
 
                 if point_in_rect(x, y, home_left, home_bottom, home_right, home_top) {
                     println!("You are home!");
+                    game_termination.reached_home = true;
                 }
             }
         }

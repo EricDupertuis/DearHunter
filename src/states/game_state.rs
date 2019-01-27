@@ -2,9 +2,11 @@ extern crate rand;
 use crate::audio;
 use crate::beast;
 use crate::config::GameConfig;
+use crate::game_termination::GameTermination;
 use crate::home;
 use crate::hunter;
 use crate::score;
+use crate::states::WinState;
 use crate::tree;
 use crate::voronoi;
 
@@ -114,5 +116,18 @@ impl SimpleState for GameState {
         audio::change_track(world, audio::MusicTracks::Game);
         score::initialise_score(world);
         world.write_resource::<score::GameTimer>().active = true;
+    }
+
+    fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
+        let won = {
+            let fetched_resource = &data.world.read_resource::<GameTermination>();
+            fetched_resource.reached_home
+        };
+
+        if won {
+            data.world.delete_all();
+            return Trans::Switch(Box::new(WinState));
+        }
+        Trans::None
     }
 }
