@@ -119,9 +119,13 @@ impl SimpleState for GameState {
     }
 
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
-        let (won, eaten) = {
+        let (won, eaten, timeout) = {
             let termination = &data.world.read_resource::<GameTermination>();
-            (termination.reached_home, termination.eaten)
+            (
+                termination.reached_home,
+                termination.eaten,
+                termination.timeout,
+            )
         };
 
         if won {
@@ -129,7 +133,7 @@ impl SimpleState for GameState {
             return Trans::Switch(Box::new(WinState));
         }
 
-        if eaten {
+        if eaten || timeout {
             data.world.delete_all();
             return Trans::Switch(Box::new(LoseState));
         }
