@@ -1,7 +1,6 @@
 extern crate amethyst;
-use crate::audio;
 use crate::score;
-use crate::states::GameState;
+use crate::states::StartState;
 use amethyst::{
     assets::{AssetStorage, Loader},
     core::nalgebra::Orthographic3,
@@ -15,12 +14,12 @@ use amethyst::{
     },
 };
 
-pub struct StartState;
+pub struct CreditState;
 
 #[derive(Default)]
-pub struct Title;
+pub struct CreditScreen;
 
-impl Component for Title {
+impl Component for CreditScreen {
     type Storage = NullStorage<Self>;
 }
 
@@ -35,11 +34,11 @@ pub fn initialise_title(world: &mut World, sprite_sheet_handle: SpriteSheetHandl
         sprite_number: 0,
     };
 
-    world.register::<Title>();
+    world.register::<CreditScreen>();
 
     world
         .create_entity()
-        .with(Title {})
+        .with(CreditScreen {})
         .with(sprite_render.clone())
         .with(transform)
         .with(Transparent)
@@ -70,7 +69,7 @@ pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
         let loader = world.read_resource::<Loader>();
         let texture_storage = world.read_resource::<AssetStorage<Texture>>();
         loader.load(
-            "sprites/title.png",
+            "sprites/credits.png",
             PngFormat,
             TextureMetadata::srgb_scale(),
             (),
@@ -81,7 +80,7 @@ pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     let loader = world.read_resource::<Loader>();
     let sprite_sheet_store = world.read_resource::<AssetStorage<SpriteSheet>>();
     loader.load(
-        "sprites/title.ron",
+        "sprites/credits.ron",
         SpriteSheetFormat,
         texture_handle,
         (),
@@ -89,13 +88,12 @@ pub fn load_sprite_sheet(world: &mut World) -> SpriteSheetHandle {
     )
 }
 
-impl SimpleState for StartState {
+impl SimpleState for CreditState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
         let sprite = load_sprite_sheet(world);
         initialise_title(world, sprite);
         initialise_camera(world);
-        audio::initialise_audio(world);
         score::initialise_score(world);
     }
 
@@ -107,7 +105,7 @@ impl SimpleState for StartState {
         if let StateEvent::Window(event) = &event {
             if is_key_down(&event, VirtualKeyCode::Space) {
                 data.world.delete_all();
-                return Trans::Switch(Box::new(GameState::new()));
+                return Trans::Switch(Box::new(StartState));
             }
         }
         Trans::None
