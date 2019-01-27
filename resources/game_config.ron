@@ -10,5 +10,10 @@
         prey_speed: 4.,
         tree_detection_radius: 5.,
         player_detection_radius: 14.,
-    )
+    ),
+
+    hunter: (
+        start_x: 0.5, // in % of arena size
+        start_y: 0.5, // in % of arena size
+    ),
 )

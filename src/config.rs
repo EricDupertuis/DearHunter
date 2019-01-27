@@ -16,7 +16,14 @@ pub struct BehaviorConfig {
 }
 
 #[derive(Debug, Deserialize, Serialize, Default)]
+pub struct HunterConfig {
+    pub start_x: f32,
+    pub start_y: f32,
+}
+
+#[derive(Debug, Deserialize, Serialize, Default)]
 pub struct GameConfig {
     pub forest: ForestConfig,
     pub behavior: BehaviorConfig,
+    pub hunter: HunterConfig,
 }

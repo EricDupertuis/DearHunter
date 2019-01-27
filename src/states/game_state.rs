@@ -72,8 +72,16 @@ impl SimpleState for GameState {
 
         let _home = home::initialise_home(world, home_sprite, ARENA_WIDTH, ARENA_HEIGHT);
 
-        let hunter =
-            hunter::initialise_hunter(world, hunter_sprite, ARENA_WIDTH * 0.5, ARENA_HEIGHT * 0.5);
+        let (hunter_start_x, hunter_start_y) = {
+            let hunter_config = &world.read_resource::<GameConfig>().hunter;
+            (hunter_config.start_x, hunter_config.start_y)
+        };
+        let hunter = hunter::initialise_hunter(
+            world,
+            hunter_sprite,
+            ARENA_WIDTH * hunter_start_x,
+            ARENA_HEIGHT * hunter_start_y,
+        );
 
         let mut rng = rand::thread_rng();
 
