@@ -32,8 +32,8 @@ pub fn initialise_score(world: &mut World) {
 
     let transform = UiTransform::new(
         "Timer".to_string(),
-        Anchor::TopMiddle,
-        -50.,
+        Anchor::TopLeft,
+        50.,
         -50.,
         1.,
         200.,
