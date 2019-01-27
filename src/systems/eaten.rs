@@ -1,7 +1,7 @@
 use amethyst::{
     core::shrev::EventChannel,
     core::transform::Transform,
-    ecs::prelude::{Join, ReadStorage, Resources, System, Write},
+    ecs::prelude::{Join, ReadStorage, System, Write},
 };
 
 use crate::components::BoundingRect;
