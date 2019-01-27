@@ -66,10 +66,11 @@ fn main() -> amethyst::Result<()> {
             "input_cmd_system",
             &["input_system"],
         )
+        .with(systems::BehaviorSystem, "behavior_system", &[])
         .with(
             systems::HunterSpriteSwitcher,
             "hunter_sprite_system",
-            &["input_cmd_system"],
+            &["input_cmd_system", "behavior_system"],
         )
         .with_bundle(
             RenderBundle::new(pipe, Some(config))
@@ -95,7 +96,6 @@ fn main() -> amethyst::Result<()> {
             "movement_system",
             &["collision_system"],
         )
-        .with(systems::BehaviorSystem, "behavior_system", &[])
         .with(
             systems::ShootCmdSystem,
             "shoot_cmd_system",

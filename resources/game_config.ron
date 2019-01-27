@@ -7,7 +7,7 @@
     ),
 
     behavior: (
-        prey_speed: 1.,
+        prey_speed: 4.,
         tree_detection_radius: 5.,
         player_detection_radius: 14.,
     )

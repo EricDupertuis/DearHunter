@@ -73,8 +73,8 @@ impl SimpleState for GameState {
         beast::initialise_beast(
             world,
             beast_sprite,
-            &[ARENA_WIDTH * 0.2, ARENA_WIDTH * 0.4, ARENA_WIDTH * 0.8],
-            &[ARENA_HEIGHT * 0.2, ARENA_HEIGHT * 0.4, ARENA_HEIGHT * 0.8],
+            &[ARENA_WIDTH * 0.9, ARENA_WIDTH * 0.93, ARENA_WIDTH * 0.95, ],
+            &[ARENA_HEIGHT * 0.9, ARENA_HEIGHT * 0.93, ARENA_HEIGHT * 0.95, ],
         );
 
         let (tree_count, centroid_count, path_width, start_radius) = {
