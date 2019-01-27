@@ -1,6 +1,6 @@
 # Dear Hunter
 
-## Run
+## Quickstart
 
 ```bash
 cargo run --release
@@ -11,7 +11,8 @@ To only display warning/error logs
 AMETHYST_LOG_LEVEL_FILTER=WARN cargo run --release
 ```
 
-# Coordinate system for set_xyz()
+## Notes
+### Coordinate system for `Transform::set_xyz()`
 * Is expressed in arena units
 * Origin is as follow
 
