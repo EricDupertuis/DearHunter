@@ -1,6 +1,6 @@
 use amethyst::{
-    assets::{AssetStorage, Loader},
-    audio::{output::Output, AudioSink, OggFormat, Source, SourceHandle},
+    assets::{Loader},
+    audio::{AudioSink, OggFormat, Source, SourceHandle},
     ecs::prelude::World,
 };
 use std::{iter::Cycle, vec::IntoIter};

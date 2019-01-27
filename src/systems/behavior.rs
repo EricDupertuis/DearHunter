@@ -53,12 +53,12 @@ impl<'s> System<'s> for BehaviorSystem {
 
             let prey_speed = beast.max_speed;
             
-            let K = Vector2::new(x - bx, y - by);
+            let k = Vector2::new(x - bx, y - by);
             
-            if K.norm() > beast.player_detection_radius {
+            if k.norm() > beast.player_detection_radius {
                 continue;
             }
-            speed += K.normalize() * prey_speed;
+            speed += k.normalize() * prey_speed;
             speed = speed.normalize() * prey_speed;
 
             cmd.x = speed.x;
