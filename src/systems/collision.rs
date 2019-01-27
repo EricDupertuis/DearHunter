@@ -6,6 +6,7 @@ use amethyst::{
 use crate::components::{BoundingRect, Velocity, VelocityCmd};
 use crate::states::{ARENA_HEIGHT, ARENA_WIDTH};
 use crate::tree::Tree;
+use crate::hunter::Hunter;
 
 
 pub struct CollisionSystem;
@@ -16,9 +17,10 @@ impl<'s> System<'s> for CollisionSystem {
         ReadStorage<'s, VelocityCmd>,
         ReadStorage<'s, Transform>,
         ReadStorage<'s, Tree>,
+        ReadStorage<'s, Hunter>,
     );
 
-    fn run(&mut self, (mut velocities, rectangles, commands, transforms, trees): Self::SystemData) {
+    fn run(&mut self, (mut velocities, rectangles, commands, transforms, trees, hunter): Self::SystemData) {
         // Map commands to velocities
         for (vel, cmd) in (&mut velocities, &commands).join() {
             vel.x = cmd.x;
@@ -43,7 +45,7 @@ impl<'s> System<'s> for CollisionSystem {
         }
 
         // Perform collision checks with trees
-        for (brect, transform, vel) in (&rectangles, &transforms, &mut velocities).join() {
+        for (brect, transform, vel, _) in (&rectangles, &transforms, &mut velocities, &hunter).join() {
             let p = Point {
                 x: transform.translation().x,
                 y: transform.translation().y,
