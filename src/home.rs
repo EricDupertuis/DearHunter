@@ -56,8 +56,8 @@ pub fn initialise_home(
     transform.set_xyz(x, y, -y);
 
     const HOME_WIDTH: f32 = 8.;
-    const HOME_HEIGHT: f32 = 4.;
-    transform.set_scale(HOME_WIDTH / 16., HOME_HEIGHT / 16., HOME_HEIGHT / 16.);
+    const HOME_HEIGHT: f32 = HOME_WIDTH * 352. / 436.;
+    transform.set_scale(HOME_WIDTH / 436., HOME_HEIGHT / 352., HOME_HEIGHT / 352.);
 
     let sprite_render = SpriteRender {
         sprite_sheet: sprite_sheet_handle.clone(),
