@@ -18,4 +18,9 @@
         start_x: 0.5, // in % of arena size
         start_y: 0.5, // in % of arena size
     ),
+
+    home: (
+        x: 0.95, // in % of arena size
+        y: 0.95, // in % of arena size
+    ),
 )

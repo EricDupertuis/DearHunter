@@ -70,7 +70,16 @@ impl SimpleState for GameState {
         let beast_sprite = beast::load_sprite_sheet(world);
         let home_sprite = home::load_sprite_sheet(world);
 
-        let _home = home::initialise_home(world, home_sprite, ARENA_WIDTH, ARENA_HEIGHT);
+        let (home_x, home_y) = {
+            let home_config = &world.read_resource::<GameConfig>().home;
+            (home_config.x, home_config.y)
+        };
+        let _home = home::initialise_home(
+            world,
+            home_sprite,
+            ARENA_WIDTH * home_x,
+            ARENA_HEIGHT * home_y,
+        );
 
         let (hunter_start_x, hunter_start_y) = {
             let hunter_config = &world.read_resource::<GameConfig>().hunter;
