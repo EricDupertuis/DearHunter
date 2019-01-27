@@ -1,10 +1,11 @@
+mod audio;
 mod beast;
 mod components;
 mod config;
-mod states;
 mod home;
 mod hunter;
 mod score;
+mod states;
 mod systems;
 mod tree;
 mod voronoi;
@@ -12,6 +13,7 @@ mod voronoi;
 use config::GameConfig;
 
 use amethyst::{
+    audio::AudioBundle,
     core::transform::TransformBundle,
     input::InputBundle,
     prelude::*,
@@ -56,6 +58,9 @@ fn main() -> amethyst::Result<()> {
         .with_bundle(TransformBundle::new())?
         .with_bundle(input_bundle)?
         .with_bundle(UiBundle::<String, String>::new())?
+        .with_bundle(AudioBundle::new(|music: &mut audio::Music| {
+            music.music.next()
+        }))?
         .with(
             systems::SpriteCullingSystem,
             "sprite_culling",

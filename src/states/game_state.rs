@@ -1,4 +1,5 @@
 extern crate rand;
+use crate::audio;
 use crate::beast;
 use crate::config::GameConfig;
 use crate::home;
@@ -110,6 +111,7 @@ impl SimpleState for GameState {
         }
 
         initialise_camera(world, hunter);
+        audio::initialise_audio(world);
         score::initialise_score(world);
         world.write_resource::<score::GameTimer>().active = true;
     }
