@@ -112,6 +112,11 @@ fn main() -> amethyst::Result<()> {
             "going_home_system",
             &["movement_system"],
         )
+        .with(
+            systems::EatenSystem,
+            "eaten_system",
+            &[],
+        )
         .with(systems::TimerSystem, "timer_system", &[]);
 
     // Base path where we look for assets/textures/sprites
