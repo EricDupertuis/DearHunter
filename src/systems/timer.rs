@@ -23,7 +23,7 @@ impl<'s> System<'s> for TimerSystem {
             }
 
             if let Some(text) = ui_text.get_mut(score_text.timer) {
-                text.text = (game_timer.timer as i32).to_string();
+                text.text = format!("{:.1}", game_timer.timer);
                 if game_timer.timer == 0. {
                     text.color = [1., 0., 0., 1.];
                 }
