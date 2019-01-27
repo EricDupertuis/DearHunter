@@ -111,5 +111,6 @@ impl SimpleState for GameState {
 
         initialise_camera(world, hunter);
         score::initialise_score(world);
+        world.write_resource::<score::GameTimer>().active = true;
     }
 }

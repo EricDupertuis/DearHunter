@@ -1,5 +1,6 @@
 extern crate amethyst;
 use crate::gamestate::GameState;
+use crate::score;
 use amethyst::{
     assets::{AssetStorage, Loader},
     core::nalgebra::Orthographic3,
@@ -93,6 +94,7 @@ impl SimpleState for StartState {
         let sprite = load_sprite_sheet(world);
         initialise_title(world, sprite);
         initialise_camera(world);
+        score::initialise_score(world);
     }
 
     fn handle_event(

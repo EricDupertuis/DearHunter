@@ -1,16 +1,27 @@
 use amethyst::{
     assets::Loader,
-    ecs::Entity,
+    ecs::{Component, DenseVecStorage, Entity},
     prelude::*,
     ui::{Anchor, TtfFormat, UiText, UiTransform},
 };
 
-/// ScoreText contains the ui text components that display the score
-pub struct ScoreText {
-    pub timer: Entity,
+pub struct GameTimer {
+    pub timer: f32,
+    pub active: bool,
+}
+impl Default for GameTimer {
+    fn default() -> Self {
+        GameTimer {
+            timer: 5.,
+            active: false,
+        }
+    }
 }
 
 pub fn initialise_score(world: &mut World) {
+    world.register::<UiText>();
+    world.register::<UiTransform>();
+
     let font = world.read_resource::<Loader>().load(
         "font/square.ttf",
         TtfFormat,
@@ -18,6 +29,7 @@ pub fn initialise_score(world: &mut World) {
         (),
         &world.read_resource(),
     );
+
     let transform = UiTransform::new(
         "Timer".to_string(),
         Anchor::TopMiddle,
@@ -34,11 +46,15 @@ pub fn initialise_score(world: &mut World) {
         .with(transform)
         .with(UiText::new(
             font.clone(),
-            "0".to_string(),
+            "".to_string(),
             [1., 1., 1., 1.],
             50.,
         ))
         .build();
 
     world.add_resource(ScoreText { timer });
+}
+
+pub struct ScoreText {
+    pub timer: Entity,
 }
