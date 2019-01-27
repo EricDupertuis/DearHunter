@@ -1,12 +1,12 @@
 use amethyst::{
     assets::Loader,
-    audio::{AudioSink, OggFormat, Source, SourceHandle},
+    audio::{AudioSink, OggFormat, SourceHandle},
     ecs::prelude::World,
 };
 use std::{iter::Cycle, vec::IntoIter};
 
 const AUDIO_MUSIC_SILENT: &'static [&'static str] = &[];
-const AUDIO_MUSIC_START: &'static [&'static str] = &[];
+const AUDIO_MUSIC_START: &'static [&'static str] = &["audio/score.ogg"];
 const AUDIO_MUSIC_GAME: &'static [&'static str] = &["audio/Kevin_MacLeod-Hot_Pursuit.ogg"];
 
 pub struct Music {
@@ -60,7 +60,9 @@ pub fn change_track(world: &mut World, track: MusicTracks) {
     .into_iter()
     .cycle();
 
+    sink.pause();
     music.music.next();
+    sink.play();
 
     match track {
         MusicTracks::Silent => sink.set_volume(0.7),

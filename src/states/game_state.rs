@@ -2,10 +2,11 @@ extern crate rand;
 use crate::audio;
 use crate::beast;
 use crate::config::GameConfig;
-use crate::events;
+use crate::game_termination::GameTermination;
 use crate::home;
 use crate::hunter;
 use crate::score;
+use crate::states::{LoseState, WinState};
 use crate::tree;
 use crate::voronoi;
 
@@ -13,7 +14,6 @@ use rand::Rng;
 
 use amethyst::{
     core::nalgebra::{Orthographic3, Point2},
-    core::shrev::{EventChannel, ReaderId},
     core::transform::Transform,
     core::Parent,
     ecs::Entity,
@@ -21,16 +21,7 @@ use amethyst::{
     renderer::{Camera, Projection},
 };
 
-#[derive(Default)]
-pub struct GameState {
-    reader: Option<ReaderId<events::GameEndEvent>>,
-}
-
-impl GameState {
-    pub fn new() -> Self {
-        GameState { reader: None }
-    }
-}
+pub struct GameState;
 
 pub const ARENA_WIDTH: f32 = 500.0;
 pub const ARENA_HEIGHT: f32 = ARENA_WIDTH * 1080. / 1920.;
@@ -71,8 +62,6 @@ impl SimpleState for GameState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
 
-        world.add_resource(EventChannel::<events::GameEndEvent>::new());
-
         // Load the spritesheet necessary to render the graphics.
         // `spritesheet` is the layout of the sprites on the image;
         // `texture` is the pixel data.
@@ -87,9 +76,10 @@ impl SimpleState for GameState {
             hunter::initialise_hunter(world, hunter_sprite, ARENA_WIDTH * 0.5, ARENA_HEIGHT * 0.5);
         
         let mut rng = rand::thread_rng();
-
-        let mut bw = [0. as f32; 100];
-        let mut bh = [0. as f32; 100];
+        
+        const nb_beast: usize = 25;
+        let mut bw = [0. as f32; nb_beast];
+        let mut bh = [0. as f32; nb_beast];
 
         for i in {0..bw.len()}{
             bw[i] = ARENA_WIDTH * rng.gen_range(0., 1.);
@@ -138,5 +128,34 @@ impl SimpleState for GameState {
         audio::change_track(world, audio::MusicTracks::Game);
         score::initialise_score(world);
         world.write_resource::<score::GameTimer>().active = true;
+    }
+
+    fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
+        let world = data.world;
+
+        world.write_resource::<score::GameTimer>().active = false;
+    }
+
+    fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
+        let (won, eaten, timeout) = {
+            let termination = &data.world.read_resource::<GameTermination>();
+            (
+                termination.reached_home,
+                termination.eaten,
+                termination.timeout,
+            )
+        };
+
+        if won {
+            data.world.delete_all();
+            return Trans::Switch(Box::new(WinState));
+        }
+
+        if eaten || timeout {
+            data.world.delete_all();
+            return Trans::Switch(Box::new(LoseState));
+        }
+
+        Trans::None
     }
 }

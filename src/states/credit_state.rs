@@ -105,7 +105,7 @@ impl SimpleState for CreditState {
         if let StateEvent::Window(event) = &event {
             if is_key_down(&event, VirtualKeyCode::Space) {
                 data.world.delete_all();
-                return Trans::Switch(Box::new(StartState));
+                return Trans::Quit;
             }
         }
         Trans::None

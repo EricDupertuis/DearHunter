@@ -1,12 +1,12 @@
 use amethyst::{
     core::shrev::EventChannel,
     core::transform::Transform,
-    ecs::prelude::{Join, ReadStorage, Resources, System, Write},
+    ecs::prelude::{Join, ReadStorage, System, Write},
 };
 
-use crate::components::BoundingRect;
-use crate::events::GameEndEvent;
 use crate::beast::Beast;
+use crate::components::BoundingRect;
+use crate::game_termination::GameTermination;
 use crate::hunter::Hunter;
 
 pub struct EatenSystem;
@@ -17,13 +17,17 @@ impl<'s> System<'s> for EatenSystem {
         ReadStorage<'s, Transform>,
         ReadStorage<'s, Beast>,
         ReadStorage<'s, Hunter>,
-        Write<'s, EventChannel<GameEndEvent>>,
+        Write<'s, GameTermination>,
     );
 
-    fn run(&mut self, (rectangles, transforms, beasts, hunters, mut game_end): Self::SystemData) {
+    fn run(
+        &mut self,
+        (rectangles, transforms, beasts, hunters, mut game_termination): Self::SystemData,
+    ) {
         for (_hunter, hunter_brect, hunter_transform) in (&hunters, &rectangles, &transforms).join()
         {
-            for (_beast, beast_brect, beast_transform) in (&beasts, &rectangles, &transforms).join() {
+            for (_beast, beast_brect, beast_transform) in (&beasts, &rectangles, &transforms).join()
+            {
                 let x = hunter_transform.translation().x;
                 let y = hunter_transform.translation().y;
 
@@ -37,7 +41,7 @@ impl<'s> System<'s> for EatenSystem {
 
                 if point_in_rect(x, y, beast_left, beast_bottom, beast_right, beast_top) {
                     println!("You are dead!");
-                    game_end.single_write(GameEndEvent::Lose);
+                    game_termination.eaten = true;
                 }
             }
         }

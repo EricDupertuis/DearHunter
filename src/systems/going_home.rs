@@ -1,26 +1,27 @@
 use amethyst::{
-    core::shrev::EventChannel,
     core::transform::Transform,
-    ecs::prelude::{Join, ReadStorage, Resources, System, Write},
+    ecs::prelude::{Join, ReadStorage, System, Write},
 };
 
 use crate::components::BoundingRect;
-use crate::events::GameEndEvent;
+use crate::game_termination::GameTermination;
 use crate::home::Home;
 use crate::hunter::Hunter;
 
 pub struct GoingHomeSystem;
-
 impl<'s> System<'s> for GoingHomeSystem {
     type SystemData = (
         ReadStorage<'s, BoundingRect>,
         ReadStorage<'s, Transform>,
         ReadStorage<'s, Home>,
         ReadStorage<'s, Hunter>,
-        Write<'s, EventChannel<GameEndEvent>>,
+        Write<'s, GameTermination>,
     );
 
-    fn run(&mut self, (rectangles, transforms, homes, hunters, mut game_end): Self::SystemData) {
+    fn run(
+        &mut self,
+        (rectangles, transforms, homes, hunters, mut game_termination): Self::SystemData,
+    ) {
         for (_hunter, hunter_brect, hunter_transform) in (&hunters, &rectangles, &transforms).join()
         {
             for (_home, home_brect, home_transform) in (&homes, &rectangles, &transforms).join() {
@@ -37,7 +38,7 @@ impl<'s> System<'s> for GoingHomeSystem {
 
                 if point_in_rect(x, y, home_left, home_bottom, home_right, home_top) {
                     println!("You are home!");
-                    game_end.single_write(GameEndEvent::Win);
+                    game_termination.reached_home = true;
                 }
             }
         }

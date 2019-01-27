@@ -1,5 +1,7 @@
 # Dear Hunter
 
+A project for the 2019's Global Game Jam.
+
 ## Quickstart
 
 ```bash
