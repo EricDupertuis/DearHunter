@@ -76,8 +76,8 @@ impl SimpleState for GameState {
         beast::initialise_beast(
             world,
             beast_sprite,
-            &[ARENA_WIDTH * 0.9, ARENA_WIDTH * 0.93, ARENA_WIDTH * 0.95, ],
-            &[ARENA_HEIGHT * 0.9, ARENA_HEIGHT * 0.93, ARENA_HEIGHT * 0.95, ],
+            &[ARENA_WIDTH * 0.9, ARENA_WIDTH * 0.93, ARENA_WIDTH * 0.95],
+            &[ARENA_HEIGHT * 0.9, ARENA_HEIGHT * 0.93, ARENA_HEIGHT * 0.95],
         );
 
         let (tree_count, centroid_count, path_width, start_radius) = {
@@ -116,6 +116,12 @@ impl SimpleState for GameState {
         audio::change_track(world, audio::MusicTracks::Game);
         score::initialise_score(world);
         world.write_resource::<score::GameTimer>().active = true;
+    }
+
+    fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
+        let world = data.world;
+
+        world.write_resource::<score::GameTimer>().active = false;
     }
 
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
