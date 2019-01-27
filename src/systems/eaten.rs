@@ -34,10 +34,10 @@ impl<'s> System<'s> for EatenSystem {
                 let beast_x = beast_transform.translation().x;
                 let beast_y = beast_transform.translation().y;
 
-                let beast_left = beast_x - 0.5 * (hunter_brect.width + beast_brect.width);
-                let beast_right = beast_x + 0.5 * (hunter_brect.width + beast_brect.width);
-                let beast_top = beast_y + 0.5 * (hunter_brect.height + beast_brect.height);
-                let beast_bottom = beast_y - 0.5 * (hunter_brect.height + beast_brect.height);
+                let beast_left = beast_x - 0.5 * (beast_brect.width);
+                let beast_right = beast_x + 0.5 * (beast_brect.width);
+                let beast_top = beast_y + 0.5 * (beast_brect.height);
+                let beast_bottom = beast_y - 0.5 * (beast_brect.height);
 
                 if point_in_rect(x, y, beast_left, beast_bottom, beast_right, beast_top) {
                     println!("You are dead!");
