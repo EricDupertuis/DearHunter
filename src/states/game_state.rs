@@ -124,7 +124,7 @@ impl SimpleState for GameState {
         }
 
         initialise_camera(world, hunter);
-        audio::initialise_audio(world);
+        audio::change_track(world, audio::MusicTracks::Game);
         score::initialise_score(world);
         world.write_resource::<score::GameTimer>().active = true;
     }

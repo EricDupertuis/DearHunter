@@ -95,8 +95,9 @@ impl SimpleState for StartState {
         let sprite = load_sprite_sheet(world);
         initialise_title(world, sprite);
         initialise_camera(world);
-        audio::initialise_audio(world);
         score::initialise_score(world);
+        audio::initialise_audio(world);
+        audio::change_track(world, audio::MusicTracks::Start);
     }
 
     fn handle_event(
