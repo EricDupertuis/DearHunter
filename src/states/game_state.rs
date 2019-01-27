@@ -133,7 +133,11 @@ impl SimpleState for GameState {
     fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         let world = data.world;
 
+        // Disable the timer
         world.write_resource::<score::GameTimer>().active = false;
+
+        // Stop the music
+        audio::change_track(world, audio::MusicTracks::Silent);
     }
 
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {

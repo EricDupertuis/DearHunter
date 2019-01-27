@@ -1,6 +1,5 @@
 extern crate amethyst;
 use crate::score;
-use crate::states::StartState;
 use amethyst::{
     assets::{AssetStorage, Loader},
     core::nalgebra::Orthographic3,
