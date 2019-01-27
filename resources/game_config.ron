@@ -13,6 +13,7 @@
     ),
 
     hunter: (
+        time_to_go_home: 60., // time available to go home in seconds
         start_x: 0.5, // in % of arena size
         start_y: 0.5, // in % of arena size
     ),

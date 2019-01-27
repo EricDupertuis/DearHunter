@@ -130,6 +130,12 @@ impl SimpleState for GameState {
         initialise_camera(world, hunter);
         audio::change_track(world, audio::MusicTracks::Game);
         score::initialise_score(world);
+
+        let time_to_go_home = {
+            let hunter_config = &world.read_resource::<GameConfig>().hunter;
+            hunter_config.time_to_go_home
+        };
+        world.write_resource::<score::GameTimer>().timer = time_to_go_home;
         world.write_resource::<score::GameTimer>().active = true;
     }
 

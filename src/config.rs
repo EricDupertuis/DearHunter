@@ -17,6 +17,7 @@ pub struct BehaviorConfig {
 
 #[derive(Debug, Deserialize, Serialize, Default)]
 pub struct HunterConfig {
+    pub time_to_go_home: f32,
     pub start_x: f32,
     pub start_y: f32,
 }
