@@ -6,7 +6,7 @@ use crate::game_termination::GameTermination;
 use crate::home;
 use crate::hunter;
 use crate::score;
-use crate::states::WinState;
+use crate::states::{LoseState, WinState};
 use crate::tree;
 use crate::voronoi;
 
@@ -119,15 +119,21 @@ impl SimpleState for GameState {
     }
 
     fn update(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
-        let won = {
-            let fetched_resource = &data.world.read_resource::<GameTermination>();
-            fetched_resource.reached_home
+        let (won, eaten) = {
+            let termination = &data.world.read_resource::<GameTermination>();
+            (termination.reached_home, termination.eaten)
         };
 
         if won {
             data.world.delete_all();
             return Trans::Switch(Box::new(WinState));
         }
+
+        if eaten {
+            data.world.delete_all();
+            return Trans::Switch(Box::new(LoseState));
+        }
+
         Trans::None
     }
 }
