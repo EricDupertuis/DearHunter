@@ -12,7 +12,7 @@ pub struct GameTimer {
 impl Default for GameTimer {
     fn default() -> Self {
         GameTimer {
-            timer: 5.,
+            timer: 22.,
             active: false,
         }
     }
