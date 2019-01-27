@@ -1,4 +1,5 @@
 use amethyst::{
+    core::nalgebra::Vector2,
     core::transform::Transform,
     ecs::prelude::{Join, ReadStorage, System, WriteStorage},
 };
@@ -6,6 +7,8 @@ use amethyst::{
 use crate::components::{BoundingRect, Velocity, VelocityCmd};
 use crate::states::{ARENA_HEIGHT, ARENA_WIDTH};
 use crate::tree::Tree;
+
+const d_radius: f32 = 4.;
 
 pub struct CollisionSystem;
 impl<'s> System<'s> for CollisionSystem {
@@ -48,6 +51,8 @@ impl<'s> System<'s> for CollisionSystem {
                 y: transform.translation().y,
             };
 
+            let mut speed = Vector2::new(0., 0.);
+
             for (_tree, tree_tf, tree_brect) in (&trees, &transforms, &rectangles).join() {
                 let tree = Rect {
                     center: Point {
@@ -66,6 +71,15 @@ impl<'s> System<'s> for CollisionSystem {
                     height: brect.height,
                 };
 
+                let mut d = Vector2::new(thing.center.x - tree.center.x, thing.center.y - tree.center.y);
+                let dst = d.norm();
+
+                if dst < d_radius && dst > 0.1 {
+                    d = d.normalize() * 1. / (dst * dst);
+                    speed += d;
+                }
+
+
                 if collides(&thing, &tree) {
                     let dx = tree.center.x - p.x;
                     let dy = tree.center.y - p.y;
@@ -77,6 +91,8 @@ impl<'s> System<'s> for CollisionSystem {
                     }
                 }
             }
+            vel.x += speed.x;
+            vel.y += speed.y;
         }
     }
 }
