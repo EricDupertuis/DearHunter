@@ -61,8 +61,8 @@ pub fn initialise_beast(
         let mut transform = Transform::default();
         transform.set_xyz(*x, *y, -*y);
 
-        const BEAST_SIZE: f32 = 2.;
-        let scale = BEAST_SIZE / 16.;
+        const BEAST_SIZE: f32 = 4.;
+        let scale = BEAST_SIZE / 256.;
         transform.set_scale(scale, scale, scale);
 
         let sprite_render = SpriteRender {
