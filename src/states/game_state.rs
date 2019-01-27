@@ -85,9 +85,9 @@ impl SimpleState for GameState {
 
         let mut rng = rand::thread_rng();
 
-        const nb_beast: usize = 100;
-        let mut bw = [0. as f32; nb_beast];
-        let mut bh = [0. as f32; nb_beast];
+        const NB_BEAST: usize = 50;
+        let mut bw = [0. as f32; NB_BEAST];
+        let mut bh = [0. as f32; NB_BEAST];
 
         for i in { 0..bw.len() } {
             bw[i] = ARENA_WIDTH * rng.gen_range(0., 1.);

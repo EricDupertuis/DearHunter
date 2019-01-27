@@ -23,7 +23,7 @@ impl<'s> System<'s> for EatenSystem {
         &mut self,
         (rectangles, transforms, beasts, hunters, mut game_termination): Self::SystemData,
     ) {
-        for (_hunter, hunter_brect, hunter_transform) in (&hunters, &rectangles, &transforms).join()
+        for (_hunter, _hunter_brect, hunter_transform) in (&hunters, &rectangles, &transforms).join()
         {
             for (_beast, beast_brect, beast_transform) in (&beasts, &rectangles, &transforms).join()
             {
