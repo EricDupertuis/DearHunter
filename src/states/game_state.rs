@@ -74,23 +74,18 @@ impl SimpleState for GameState {
 
         let hunter =
             hunter::initialise_hunter(world, hunter_sprite, ARENA_WIDTH * 0.5, ARENA_HEIGHT * 0.5);
-        
+
         let mut rng = rand::thread_rng();
-        
-        const nb_beast: usize = 25;
+
+        const nb_beast: usize = 100;
         let mut bw = [0. as f32; nb_beast];
         let mut bh = [0. as f32; nb_beast];
 
-        for i in {0..bw.len()}{
+        for i in { 0..bw.len() } {
             bw[i] = ARENA_WIDTH * rng.gen_range(0., 1.);
             bh[i] = ARENA_HEIGHT * rng.gen_range(0., 1.);
         }
-        beast::initialise_beast(
-            world,
-            beast_sprite,
-            &bw,
-            &bh,
-        );
+        beast::initialise_beast(world, beast_sprite, &bw, &bh);
 
         let (tree_count, centroid_count, path_width, start_radius) = {
             let forest_config = &world.read_resource::<GameConfig>().forest;
