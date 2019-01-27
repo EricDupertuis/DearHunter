@@ -6,10 +6,11 @@
         start_zone_radius: 0.04, // normalized, i.e. 1 means whole game area
     ),
 
-    behavior: (
+    beast: (
         prey_speed: 4.,
         tree_detection_radius: 5.,
         player_detection_radius: 14.,
+        count: 50,
     ),
 
     hunter: (

@@ -85,14 +85,16 @@ impl SimpleState for GameState {
 
         let mut rng = rand::thread_rng();
 
-        const NB_BEAST: usize = 50;
-        let mut bw = [0. as f32; NB_BEAST];
-        let mut bh = [0. as f32; NB_BEAST];
-
-        for i in { 0..bw.len() } {
-            bw[i] = ARENA_WIDTH * rng.gen_range(0., 1.);
-            bh[i] = ARENA_HEIGHT * rng.gen_range(0., 1.);
-        }
+        let nb_beast = {
+            let beast_config = &world.read_resource::<GameConfig>().beast;
+            beast_config.count
+        };
+        let bw: Vec<f32> = (1..nb_beast)
+            .map(|_| ARENA_WIDTH * rng.gen_range(0., 1.))
+            .collect();
+        let bh: Vec<f32> = (1..nb_beast)
+            .map(|_| ARENA_HEIGHT * rng.gen_range(0., 1.))
+            .collect();
         beast::initialise_beast(world, beast_sprite, &bw, &bh);
 
         let (tree_count, centroid_count, path_width, start_radius) = {

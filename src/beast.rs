@@ -76,11 +76,11 @@ pub fn initialise_beast(
         world.register::<components::BoundingRect>();
 
         let (prey_speed, player_detection_radius, tree_detection_radius) = {
-            let behavior_config = &world.read_resource::<GameConfig>().behavior;
+            let beast_config = &world.read_resource::<GameConfig>().beast;
             (
-                behavior_config.prey_speed,
-                behavior_config.player_detection_radius,
-                behavior_config.tree_detection_radius,
+                beast_config.prey_speed,
+                beast_config.player_detection_radius,
+                beast_config.tree_detection_radius,
             )
         };
 
