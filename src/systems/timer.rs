@@ -1,5 +1,5 @@
 use amethyst::core::timing::Time;
-use amethyst::ecs::{Read, ReadExpect, Resources, System, Write, WriteStorage};
+use amethyst::ecs::{Read, ReadExpect, System, Write, WriteStorage};
 use amethyst::ui::UiText;
 
 use crate::score::{GameTimer, ScoreText};

@@ -1,5 +1,4 @@
-use amethyst::ecs::{Join, Read, ReadStorage, System, WriteStorage};
-use amethyst::input::InputHandler;
+use amethyst::ecs::{Join, ReadStorage, System, WriteStorage};
 use amethyst::renderer::SpriteRender;
 
 use crate::components::VelocityCmd;
