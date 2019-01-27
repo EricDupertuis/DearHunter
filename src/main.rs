@@ -24,7 +24,6 @@ use amethyst::{
     ui::{DrawUi, UiBundle},
     utils::application_root_dir,
 };
-use game_termination::GameTermination;
 use states::StartState;
 
 fn main() -> amethyst::Result<()> {
@@ -113,11 +112,7 @@ fn main() -> amethyst::Result<()> {
             "going_home_system",
             &["movement_system"],
         )
-        .with(
-            systems::EatenSystem,
-            "eaten_system",
-            &[],
-        )
+        .with(systems::EatenSystem, "eaten_system", &[])
         .with(systems::TimerSystem, "timer_system", &[]);
 
     // Base path where we look for assets/textures/sprites

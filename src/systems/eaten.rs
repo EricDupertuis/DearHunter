@@ -1,5 +1,4 @@
 use amethyst::{
-    core::shrev::EventChannel,
     core::transform::Transform,
     ecs::prelude::{Join, ReadStorage, System, Write},
 };
