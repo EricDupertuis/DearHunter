@@ -67,7 +67,6 @@ impl<'s> System<'s> for CollisionSystem {
                     height: brect.height,
                 };
 
-
                 if collides(&thing, &tree) {
                     let dx = tree.center.x - p.x;
                     let dy = tree.center.y - p.y;
