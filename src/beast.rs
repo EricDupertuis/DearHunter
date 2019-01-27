@@ -93,8 +93,8 @@ pub fn initialise_beast(
             })
             .with(sprite_render.clone())
             .with(components::BoundingRect {
-                width: BEAST_SIZE,
-                height: BEAST_SIZE,
+                width: BEAST_SIZE * 0.8,
+                height: BEAST_SIZE * 0.8,
             })
             .with(transform)
             .with(Transparent)
