@@ -77,5 +77,6 @@ pub fn initialise_tree(world: &mut World, sprite_sheet_handle: SpriteSheetHandle
         })
         .with(transform)
         .with(Transparent)
+        .with(components::AutoHide {})
         .build();
 }

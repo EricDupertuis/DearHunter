@@ -104,6 +104,7 @@ pub fn initialise_beast(
                 z: 0.,
             })
             .with(components::VelocityCmd { x: 0., y: 0. })
+            .with(components::AutoHide {})
             .build();
     }
 }
