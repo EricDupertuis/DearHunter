@@ -107,7 +107,7 @@ impl SimpleState for StartState {
         if let StateEvent::Window(event) = &event {
             if is_key_down(&event, VirtualKeyCode::Space) {
                 data.world.delete_all();
-                return Trans::Switch(Box::new(GameState));
+                return Trans::Switch(Box::new(GameState::new()));
             }
         }
         Trans::None

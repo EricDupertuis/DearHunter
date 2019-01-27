@@ -2,6 +2,7 @@ mod audio;
 mod beast;
 mod components;
 mod config;
+mod events;
 mod home;
 mod hunter;
 mod score;
