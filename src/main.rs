@@ -86,6 +86,11 @@ fn main() -> amethyst::Result<()> {
             &["input_cmd_system"],
         )
         .with(
+            systems::RepulsionSystem,
+            "repulsion_system",
+            &["collision_system"],
+        )
+        .with(
             systems::MoveSystem,
             "movement_system",
             &["collision_system"],
