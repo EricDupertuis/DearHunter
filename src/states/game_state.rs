@@ -122,11 +122,11 @@ impl SimpleState for GameState {
             path_width,
             vec![
                 voronoi::ClearRegion {
-                    center: Point2::new(0.5, 0.5),
+                    center: Point2::new(hunter_start_x, hunter_start_y),
                     radius: start_radius,
                 },
                 voronoi::ClearRegion {
-                    center: Point2::new(1.0, 1.0),
+                    center: Point2::new(home_x, home_y),
                     radius: start_radius,
                 },
             ],
